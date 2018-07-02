@@ -1,0 +1,5 @@
+media/
+source/
+venv/
+*.pyc
+*.mkv
