@@ -4,6 +4,8 @@
 	<title>Home</title>
 </head>
 <body>
+	<!-- <h1>Video</h1> -->
+	<!-- <video data-dashjs-player autoplay controls></video> -->
 	<h1>Here are the files</h1>
 	<div id="files"></div>
 	<button id="thingy">Search for files</button>
@@ -15,7 +17,7 @@
 				return res.json();
 			})
 			.then( data => {
-				console.log(data);
+				// console.log(data);
 				if(data.files.length > 0){
 					let ele = `<ul>`;
 					for(let file of data.files){
@@ -37,13 +39,15 @@
 		}
 
 		function startVid(e){
-			console.log(e.target.dataset.path);
+			// console.log(e.target.dataset.path);
 			fetch(`/vid?path=${e.target.dataset.path}`)
 			.then( res => {
 				return res.json();
 			})
 			.then( data => {
-				console.log(data);
+				// console.log(data);
+				let video = document.querySelector("video");
+				window.location = `/watch?key=${data.key}`;
 			})
 		}
 
