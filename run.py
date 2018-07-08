@@ -46,17 +46,10 @@ out, err = b.communicate()
 if err != None:
 	print(err)
 
-# check for virtualenv
+# start the server
 
-if 'venv' not in os.listdir(os.getcwd()):
-	os.system("virtualenv venv")
-	os.system("source venv/bin/activate")
-	os.system("pip install -r requirments.txt")
-else:
-	os.system("source venv/bin/activate")
-
-# run the django server
-
-os.chdir("server")
-print("starting the server")
-os.system("python manage.py runserver 0.0.0.0:8000")
+os.system(
+	". venv/bin/activate;\
+	cd server;\
+	python manage.py runserver 0.0.0.0:8000"
+)
