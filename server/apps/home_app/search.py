@@ -17,4 +17,4 @@ def vid_search(loc):
 # returns a list paths to all videos matching the allowed extensions
 def start():
 	VIDEOS[0] = []
-	return vid_search(os.path.expanduser("~"))
+	return vid_search("/media/sf_shared")

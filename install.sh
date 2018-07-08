@@ -1,5 +1,6 @@
 #!/bin/bash
 
+cd ..
 apt-get build-dep nginx
 apt-get source nginx
 git clone https://github.com/ut0mt8/nginx-rtmp-module/
