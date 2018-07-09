@@ -15,12 +15,12 @@ def play(path):
 	key = "_".join(key.split(" "))
 	p = escape_chars(path)
 	# k = escape_chars(key)
-	print "*"*100
-	print ENCODE.format(path, p, key)
-	print "*"*100
+	# print "*"*100
+	# print ENCODE.format(path, p, key)
+	# print "*"*100
 	subprocess.Popen(ENCODE.format(path, p, key), shell=True)
 
 	# wait for the file to start encoding
 	# hopefully this is long enough
-	time.sleep(5)
+	# time.sleep(10)
 	return key

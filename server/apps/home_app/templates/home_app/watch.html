@@ -12,7 +12,24 @@
 </head>
 <body>
 	<h1>{{key}}</h1>
-	<video data-dashjs-player autoplay src="http://{{host}}/dash/{{key}}.mpd" controls></video>
+	<video data-dashjs-player autoplay src="http://{{host}}/dash/{{key}}.mpd" controls id="vid"></video>
 	<a href="/">Back</a>
+
+	<script>
+		const vid = document.getElementById("vid");
+
+		if (window.MediaSource) {
+			player = dashjs.MediaPlayer().create();
+			player.initialize(vid, null, true);
+			player.setFastSwitchEnabled(true);
+			// console.log(player);
+			player.reset()
+		} else {
+			let src = vid.src;
+			src = src.replace("/dash/", "/hls/");
+			video_element.src = src;
+		}
+	</script>
+
 </body>
 </html>

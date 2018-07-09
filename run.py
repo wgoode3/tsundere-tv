@@ -48,6 +48,8 @@ if err != None:
 
 # start the server
 
+# os.system("xdg-open http://{}:8000".format(ip))
+
 os.system(
 	". venv/bin/activate;\
 	cd server;\

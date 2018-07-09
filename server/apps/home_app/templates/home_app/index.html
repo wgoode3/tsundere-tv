@@ -17,7 +17,6 @@
 				return res.json();
 			})
 			.then( data => {
-				// console.log(data);
 				if(data.files.length > 0){
 					let ele = `<ul>`;
 					for(let file of data.files){
@@ -39,16 +38,24 @@
 		}
 
 		function startVid(e){
-			// console.log(e.target.dataset.path);
 			fetch(`/vid?path=${e.target.dataset.path}`)
 			.then( res => {
 				return res.json();
 			})
 			.then( data => {
-				// console.log(data);
-				let video = document.querySelector("video");
-				window.location = `/watch?key=${data.key}`;
+				checkStatus(`http://${data.host}/dash/${data.key}.mpd`, data.key);
 			})
+		}
+
+		function checkStatus(url, key){
+			fetch(url).then(function(res){
+				console.log(res.status);
+				if(res.status != 200){
+					setTimeout(function(){checkStatus(url, key);}, 1000);
+				} else {
+					window.location = `/watch?key=${key}`;
+				}
+			});
 		}
 
 	</script>

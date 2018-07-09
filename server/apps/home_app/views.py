@@ -22,7 +22,8 @@ def test(req):
 def vid(req):
 	# should probably implement some sort of wait here!
 	return JsonResponse({
-		'status': 200, 
+		'status': 200,
+		'host': settings.ALLOWED_HOSTS[0], 
 		'key': play(req.GET['path'])
 	})
 
