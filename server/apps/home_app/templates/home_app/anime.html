@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Home</title>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+	<style>
+		.column {
+			position: relative;
+		}
+		.column img {
+			width: 100%;
+		}
+		.column p {
+			word-wrap: break-word;
+		}
+		[data-path] {
+			position: absolute;
+			bottom: 0 ;
+			right: 10px;
+		}
+		.vid:hover {
+			/*cursor:pointer;*/
+			background-color: #eee;
+		}
+	</style>
+	{% load static %}
+</head>
+<body>
+
+	<div class="container">
+		<div class="hero is-primary">
+		    <div class="hero-body is-bold">
+		        <h1 class="title">Video Server</h1>
+		    </div>
+		</div>
+
+		<a href="/"><button class="button is-link">Back</button></a>
+
+		<div class="columns">
+			<div class="column is-3">
+				<div class="card">
+					<div class="card-image">
+						<figure class="image">
+							<img src="{{ anime.get_thumb }}" alt="{{ anime.mal_title }}">
+						</figure>
+					</div>
+					<div class="card-content">
+						<div class="media">
+							<div class="media-content">
+								<p class="title is-4">{{ anime.mal_title }}</p>
+							</div>
+						</div>
+
+						<div class="content">
+							<p>
+								{{ anime.description }}
+								<a href="{{ anime.mal_url }}">MAL</a><br>
+								Score: {{ anime.mal_score }}<br>
+								Type: {{ anime.anime_type }}<br>
+								Episodes: {{ anime.episodes }}
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="column is-9">
+				{% for video in anime.videos.all %}
+					{% if forloop.counter0 == 0 %}
+						<div class="columns">
+					{% elif forloop.counter0|divisibleby:3 %}
+						</div><div class="columns">
+					{% endif %}
+					<div class="vid column is-4">
+						<img src="/static/home_app/img/{{ video.thumb }}" alt="thumb">
+						<p>{{ video.filename }}</p>
+						<details>
+							<summary>Details</summary>
+							<p>Group: {{ video.sub_group }}</p>
+							<p>Anime: {{ video.anime.mal_title }}</p>
+							<p>Episode: {{ video.episode_number }}</p>
+							<p>Duration: {{ video.get_duration }}</p>
+							<p>Subtitles: {{ video.subtitles }}</p>
+							<p>Filesize: {{ video.get_filesize }}</p>
+						</details>
+						<button class="button is-link" data-path="{{ video.path }}">▶ Play</button>
+					</div>
+					{% if forloop.counter == videos|length %}
+						</div>
+					{% endif %}
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+
+		function videoListeners(){
+			for(let vid of document.querySelectorAll("[data-path]")){
+				vid.addEventListener("click", function(e){
+					e.target.classList.add("is-loading");
+					startVid(e);
+				});
+			}
+		}
+		videoListeners();
+
+		function startVid(e){
+			fetch(`/vid?path=${e.target.dataset.path}`)
+			.then( res => {
+				return res.json();
+			})
+			.then( data => {
+				watchWhenReady(`http://${data.host}/dash/${data.key}.mpd`, data.key);
+			})
+		}
+
+		function watchWhenReady(url, key){
+			fetch(url).then(function(res){
+				console.log(res.status);
+				if(res.status != 200){
+					setTimeout(function(){watchWhenReady(url, key);}, 1000);
+				} else {
+					window.location = `/watch?key=${key}`;
+				}
+			});
+		}
+
+	</script>
+
+</body>
+</html>

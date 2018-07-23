@@ -5,5 +5,6 @@ urlpatterns = [
     url(r'^$', views.index),
     url(r'^test$', views.test),
     url(r'^vid$', views.vid),
-    url(r'^watch$', views.watch)
+    url(r'^watch$', views.watch),
+    url(r'^anime/(?P<anime_id>\d+)$', views.anime)
 ]

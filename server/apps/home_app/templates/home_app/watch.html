@@ -2,18 +2,24 @@
 <html>
 <head>
 	<title>{{key}}</title>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 	<style type="text/css">
 		video {
-			width: 1280px;
-			height: 720px;
+			/*width: 1280px;
+			height: 720px;*/
+			width: 100%;
 		}
 	</style>
-	<script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>
+	<!-- <script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script> -->
+	<script type="text/javascript" src="/static/home_app/js/dash.min.js"></script>
 </head>
 <body>
-	<h1>{{key}}</h1>
-	<video data-dashjs-player autoplay src="http://{{host}}/dash/{{key}}.mpd" controls id="vid"></video>
-	<a href="/">Back</a>
+	<div class="container">
+		<video data-dashjs-player autoplay src="http://{{host}}/dash/{{key}}.mpd" controls id="vid" poster="/static/home_app/img/{{key}}.jpg"></video>
+		<h1>{{key}}</h1>
+		<a href="/">[Back]</a>
+	</div>
 
 	<script>
 		const vid = document.getElementById("vid");

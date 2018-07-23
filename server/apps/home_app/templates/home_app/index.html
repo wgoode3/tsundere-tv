@@ -2,61 +2,84 @@
 <html>
 <head>
 	<title>Home</title>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+	<style>
+		.column {
+			position: relative;
+			margin: 10px 0px;
+			/*min-height: 300px;*/
+		}
+		.column:hover {
+			cursor:pointer;
+			background-color: #eee;
+		}
+		.column img {
+			width: 100%;
+		}
+		.column p {
+			word-wrap: break-word;
+		}
+		[data-path] {
+			position: absolute;
+			bottom: 0 ;
+			right: 10px;
+		}
+	</style>
+	{% load static %}
 </head>
 <body>
-	<!-- <h1>Video</h1> -->
-	<!-- <video data-dashjs-player autoplay controls></video> -->
-	<h1>Here are the files</h1>
-	<div id="files"></div>
-	<button id="thingy">Search for files</button>
+
+	<div class="container">
+		<div class="hero is-primary">
+		    <div class="hero-body is-bold">
+		        <h1 class="title">Video Server</h1>
+		    </div>
+		</div>
+	
+		{% for a in anime %}
+			{% if forloop.counter0 == 0 %}
+				<div class="columns">
+			{% elif forloop.counter0|divisibleby:6 %}
+				</div><div class="columns">
+			{% endif %}
+				
+				<div class="column is-2" data-anime="{{a.id}}">
+					<img src="{{ a.get_thumb }}" alt="{{ a.mal_title }}">
+					<p>{{ a.mal_title }}</p>
+				</div>
+
+			{% if forloop.counter == anime|length %}
+				</div>
+			{% endif %}
+
+		{% endfor %}
+
+		<a href="/test">
+			<button class="button is-info" id="thingy">
+				Search for files
+			</button>
+		</a>
+
+	</div>
 
 	<script type="text/javascript">
 		document.getElementById("thingy").addEventListener("click", function(e){
-			fetch("/test")
-			.then( res => {
-				return res.json();
-			})
-			.then( data => {
-				if(data.files.length > 0){
-					let ele = `<ul>`;
-					for(let file of data.files){
-						ele += `<li><button data-path="${file}">${file.split("/")[file.split("/").length-1]}</button></li>`;
-					}
-					ele += `</ul>`;
-					document.getElementById("files").innerHTML = ele;
-					videoListeners()
-				}
-			})
+			document.getElementById("thingy").classList.add("is-loading");
 		});
 
-		function videoListeners(){
-			for(let vid of document.querySelectorAll("[data-path]")){
-				vid.addEventListener("click", function(e){
-					startVid(e);
+		function animeListeners(){
+			for(let anime of document.querySelectorAll("[data-anime]")){
+				anime.addEventListener("click", function(e){
+					if(e.target.nodeName == "DIV") {
+						window.location = `/anime/${e.target.dataset.anime}`;
+					} else {
+						window.location = `/anime/${e.target.parentNode.dataset.anime}`;
+					}
 				});
 			}
 		}
-
-		function startVid(e){
-			fetch(`/vid?path=${e.target.dataset.path}`)
-			.then( res => {
-				return res.json();
-			})
-			.then( data => {
-				checkStatus(`http://${data.host}/dash/${data.key}.mpd`, data.key);
-			})
-		}
-
-		function checkStatus(url, key){
-			fetch(url).then(function(res){
-				console.log(res.status);
-				if(res.status != 200){
-					setTimeout(function(){checkStatus(url, key);}, 1000);
-				} else {
-					window.location = `/watch?key=${key}`;
-				}
-			});
-		}
+		animeListeners();
 
 	</script>
 
