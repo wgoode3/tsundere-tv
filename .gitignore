@@ -3,3 +3,4 @@ source/
 venv/
 *.pyc
 *.mkv
+*.jpg
