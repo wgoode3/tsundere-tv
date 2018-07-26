@@ -17,18 +17,15 @@ def index(req):
 	return render(req, 'home_app/index.html', data)
 
 def test(req):
-	# files = vid_search()
-	# print files
+	# really should consider not going back to square one each time
 	Video.objects.all().delete()
+	# find all the anime
 	vid_search()
-	# vids = Video.objects.all()
-	# print(vids)
-	# response = {
-	# 	'status': 200,
-	# 	'files': []
-	# }
+	# sometimes an anime gets considered 2 seperate anime
+	# this merges them back ...
+	# seems broken
+	# Anime.objects.merge_related()
 	return redirect("/")
-	# return JsonResponse(response)
 
 def anime(req, anime_id):
 	return render(req, 'home_app/anime.html', {"anime": Anime.objects.get(id=anime_id)})

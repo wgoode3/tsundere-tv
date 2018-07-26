@@ -1,7 +1,7 @@
 import os, subprocess
 
-THUMB = '''ffmpeg -ss {0} -i "{1}" -vframes 1 -s 480x270 "{2}/{3}.jpg" -y'''
-DURATION = '''ffprobe -i "{}" -show_entries format=duration -v quiet -of csv="p=0"'''
+THUMB = u'''ffmpeg -ss {0} -i "{1}" -vframes 1 -s 480x270 "{2}/{3}.jpg" -y'''
+DURATION = u'''ffprobe -i "{}" -show_entries format=duration -v quiet -of csv="p=0"'''
 FNULL = open(os.devnull, 'w')
 FOLDER = os.getcwd() + "/apps/home_app/static/home_app/img"
 

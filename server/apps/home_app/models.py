@@ -48,6 +48,23 @@ class AnimeManager(models.Manager):
 				newAnime.mal_score = 0.0
 			newAnime.save()
 			return newAnime.id
+	
+	def merge_related(self):
+		all_anime = Anime.objects.all()
+		for anime in all_anime:
+			dupes = Anime.objects.filter(mal_title=anime.mal_title)
+			if len(dupes) > 1:
+				# find the duplicate with the most videos
+				has_most = max(dupes, key=lambda x: len(x.videos.all()))
+				dupes.exclude(id=has_most.id)
+				for dup in dupes:
+					for video in dup.videos.all():
+						# set foreign key to the entry with most videos
+						video.anime = has_most
+						video.save()
+					# delete the duplicate
+					Anime.objects.filter(id=dup.id).delete()
+					all_anime.exclude(id=dup.id)
 
 class Anime(models.Model):
 	title = models.CharField(max_length=255)
@@ -65,6 +82,12 @@ class Anime(models.Model):
 	def get_thumb(self):
 		# return a link to a larger thumbnail image
 		return self.mal_img_url.replace("/r/100x140/", "/")
+
+	def __repr__(self):
+		return "<Anime object ({id}) {title}>".format(id=self.id, title=self.title)
+
+	def __str__(self):
+		return "<Anime object ({id}) {title}>".format(id=self.id, title=self.title)
 
 class VideoManager(models.Manager):
 	def addVideo(self, path):
@@ -98,6 +121,25 @@ class VideoManager(models.Manager):
 		# also remove "-" that are inside of whitespace 
 		anime = anime.replace(" - ", " ")
 
+		print("*"*100)
+		print("at this point anime is", anime)
+		print("*"*100)
+
+		# first check for season number
+		season = ""
+		seasons = re.findall("((SECOND|THIRD|FOURTH)\ SEASON)|(SEASON\ (\d))|(S(\d))", anime, flags=re.IGNORECASE)
+		if len(seasons) > 0:
+			seasons = [s for s in seasons[0] if not s.isdigit() and len(s) > 0]
+			if len(seasons) > 0:
+				print("seasons arghhh!", seasons)
+				season = max(seasons, key=len)
+
+		# I'm also going to consider it safe to pull out season information
+		if season != "":
+			print("the season is!", season)
+			anime = anime.replace(season, "")
+			print("the anime is now!!!!", anime)
+
 		# get episode number and handle v0, v2, etc releases
 		episode = ""
 		revision = re.findall(r'[0-9]+[\ ]?[v|V][0-9]+', anime)
@@ -117,16 +159,30 @@ class VideoManager(models.Manager):
 				episode = ova[0]
 				is_ova = True
 
-		# look for season information
-		# matches s2, S3, etc 
-		# season = re.findall(r'[s|S]+[0-9]+', anime)
+		# also check for specials
+		is_special = False
+		if episode == "":
+			special = re.findall("(SP(\ )?(\d)+)|(SPECIAL(\ )?(\d)+)", anime, flags=re.IGNORECASE)
+			print "what what what", special
+			if len(special) > 0:
+				special = [s for s in special[0] if not s.isdigit() and len(s) > 0]
+				if len(special) == 1:
+					episode = special[0]
+					is_special = True
 
-		# parts = re.findall(r"[\w']+", vid.filename)
-		# if len(parts) > 2:
-		# 	vid.sub_group = parts[0]
-		# 	for part in parts:
-		# 		if part.isdigit():
-		# 			vid.episode_number = int(part)
+		""" This matches and splits off characters op and ed even in an anime name, not good """
+		""" I'll try forcing a space at the start of the sequence """
+
+		# also check for OP ED
+		is_op_ed = False
+		if episode == "":
+			op_ed = re.findall("(\ NCOP(\d+)?|\ NCED(\d+)?|\ OP(\d+)?|\ ED(\d+)?)", anime, flags=re.IGNORECASE)
+			print "why why why", op_ed
+			if len(op_ed) > 0:
+				op_ed = [o for o in op_ed[0] if not o.isdigit() and len(o) > 0]
+				if len(op_ed) == 1:
+					episode = op_ed[0]
+					is_op_ed = True
 
 		# determine the crc32 hash
 		crc_hash = ""
@@ -137,6 +193,7 @@ class VideoManager(models.Manager):
 		# I'm going to consider it safe to remove the episode number from the anime name
 		# possible that episode number could also be in the name, that would be bad
 		if episode != "":
+			print("breaking things!", episode)
 			anime = anime.split(episode)[0]
 
 		anime = anime.strip()
@@ -146,25 +203,32 @@ class VideoManager(models.Manager):
 		out, err = b.communicate()
 		streams = []
 		stream = {}
-		for line in out.split("\n"):
-			if line == "[STREAM]":
-				stream = {}
-			elif line == "[/STREAM]":
-				streams.append(stream)
-			else:
-				if len(line.split("=")) == 2:
-					stream[line.split("=")[0]] = line.split("=")[1]
+		# split("\n") may sometimes give weird errors
+		try:
+			for line in out.splitlines():
+				if line == "[STREAM]":
+					stream = {}
+				elif line == "[/STREAM]":
+					streams.append(stream)
+				else:
+					if len(line.split("=")) == 2:
+						stream[line.split("=")[0]] = line.split("=")[1]
+		except UnicodeDecodeError as e:
+			print("some weird unicode error here", e)
 		subtitles = [s for s in streams if s["codec_type"] == 'subtitle']
 		# print("*"*100)
 		# print(subtitles)
 		subs = ""
 		for i in range(len(subtitles)):
-			subs += "index=" + subtitles[i]["index"] + ","
-			subs += "codec=" + subtitles[i]["codec_name"] + ","
-			# print("the thing that is breaking", path)
-			subs += "language=" + subtitles[i]["TAG:language"]
-			if i < len(subtitles) - 1:
-				subs += ";"
+			try:
+				subs += "index=" + subtitles[i]["index"] + ","
+				subs += "codec=" + subtitles[i]["codec_name"] + ","
+				# print("the thing that is breaking", path)
+				subs += "language=" + subtitles[i]["TAG:language"]
+				if i < len(subtitles) - 1:
+					subs += ";"
+			except KeyError:
+				break
 		vid.subtitles = subs
 		response = thumbify(path)
 		vid.duration = response["duration"]

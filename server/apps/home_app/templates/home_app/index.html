@@ -46,7 +46,7 @@
 				
 				<div class="column is-2" data-anime="{{a.id}}">
 					<img src="{{ a.get_thumb }}" alt="{{ a.mal_title }}">
-					<p>{{ a.mal_title }}</p>
+					<p>{{ a.mal_title|safe }}</p>
 				</div>
 
 			{% if forloop.counter == anime|length %}
