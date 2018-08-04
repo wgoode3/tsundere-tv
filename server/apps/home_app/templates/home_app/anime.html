@@ -5,7 +5,20 @@
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
 	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 	<style>
-		.column {
+		html {
+			background-color: #363636;
+		}
+		html {
+			overflow: hidden;
+			background-image: url("/static/home_app/img/footer_lodyas/footer_lodyas.png");
+		}
+		p, details, .title {
+			color: #ddd;
+		}
+		.video-block:hover {
+			background-color: #2229;
+		}
+		.vid {
 			position: relative;
 		}
 		.column img {
@@ -14,31 +27,127 @@
 		.column p {
 			word-wrap: break-word;
 		}
-		[data-path] {
-			position: absolute;
-			bottom: 0 ;
-			right: 10px;
+		.vid img {
+			opacity: 1;
+			display: block;
+			width: 100%;
+			height: auto;
+			transition: .25s ease;
+			backface-visibility: hidden;
 		}
-		.vid:hover {
-			/*cursor:pointer;*/
-			background-color: #eee;
+		.middle {
+			opacity: 0;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			-ms-transform: translate(-50%, -50%);
+			text-align: center;
+			transition: .25s ease;
+		}
+		.vid:hover { cursor: pointer; }
+		.vid:hover img { filter: brightness(50%) }
+		.vid:hover .middle { opacity: 1; }
+		.play {
+			width: 0; 
+			height: 0; 
+			border-top: 25px solid transparent;
+			border-bottom: 25px solid transparent;
+			border-left: 50px solid #fffc;
+		}
+		.loading img { filter: brightness(50%) }
+		.loading .middle { opacity: 1; }
+		.loading .play {
+			height: 40px;
+			width: 40px;
+			border-radius: 50%;
+			background-color: transparent;
+			border: 10px solid #fffc;
+			border-bottom-color: transparent;
+			animation-name: spin;
+			animation-duration: 1000ms;
+			animation-iteration-count: infinite;
+			animation-timing-function: linear;
+		}
+		@keyframes spin {
+			from { transform:rotate(0deg); }
+			to { transform:rotate(360deg); }
+		}
+		.float-right { float: right; }
+		.container {
+			margin-top: 62px;
+			background-color: #fff1;
+			padding: 0 10px;
+		}
+		.right-col {
+			max-height: calc(100vh - 62px);
+			overflow: auto;
+		}
+		.left-col { 
+			max-height: calc(100vh - 62px); 
+			overflow: hidden;
+		}
+		.left-col:hover { 
+			overflow: auto; 
+			overflow-y: overlay;
+			overflow-x: hidden;
+		}
+		figure.image {
+			margin: 0 auto;
+			width: 72%;
+		}
+		.card {
+			background-color: transparent;
+			box-shadow: none;
+		}
+		.card .title {
+			text-align: center;
 		}
 	</style>
 	{% load static %}
 </head>
 <body>
 
-	<div class="container">
-		<div class="hero is-primary">
-		    <div class="hero-body is-bold">
-		        <h1 class="title">Video Server</h1>
-		    </div>
+	<nav class="navbar is-fixed-top is-dark">
+		<div class="navbar-brand">
+			<a class="navbar-item" href="/">
+				<img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
+			</a>
+			<div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
+				<span></span><span></span><span></span>
+			</div>
 		</div>
+		
+		<div id="navbarExampleTransparentExample" class="navbar-menu">
+			<div class="navbar-start">
+				<a class="navbar-item" href="/">Home</a>
+				<div class="navbar-item has-dropdown is-hoverable">
+					<a class="navbar-link" href="#!">Other</a>
+					<div class="navbar-dropdown is-boxed">
+						<a class="navbar-item" href="#!">About</a>
+						<a class="navbar-item" href="#!">Settings</a>
+					</div>
+				</div>
+			</div>
+			<div class="navbar-end">
+				<div class="navbar-item">
+					<div class="field is-grouped">
+						<p class="control">
+							<a class="button is-link" href="/">
+								<span class="icon"><i class="fas fa-arrow-circle-left"></i></span>
+								<span>Back</span>
+							</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</nav>
 
-		<a href="/"><button class="button is-link">Back</button></a>
-
+	<div class="container">
+		
 		<div class="columns">
-			<div class="column is-3">
+			<div class="column is-3 left-col">
 				<div class="card">
 					<div class="card-image">
 						<figure class="image">
@@ -64,15 +173,20 @@
 					</div>
 				</div>
 			</div>
-			<div class="column is-9">
-				{% for video in anime.videos.all %}
+			<div class="column is-9 right-col">
+				{% for video in videos %}
 					{% if forloop.counter0 == 0 %}
 						<div class="columns">
 					{% elif forloop.counter0|divisibleby:3 %}
 						</div><div class="columns">
 					{% endif %}
-					<div class="vid column is-4">
-						<img src="/static/home_app/img/{{ video.thumb }}" alt="thumb">
+					<div class="column is-4 video-block">
+						<div class="vid" data-path="{{ video.path }}">
+							<img src="/static/home_app/img/{{ video.thumb }}" alt="thumb">
+							<div class="middle">
+								<div class="play"></div>
+							</div>
+						</div>
 						<p>{{ video.filename }}</p>
 						<details>
 							<summary>Details</summary>
@@ -83,7 +197,6 @@
 							<p>Subtitles: {{ video.subtitles }}</p>
 							<p>Filesize: {{ video.get_filesize }}</p>
 						</details>
-						<button class="button is-link" data-path="{{ video.path }}">▶ Play</button>
 					</div>
 					{% if forloop.counter == videos|length %}
 						</div>
@@ -95,18 +208,32 @@
 
 	<script type="text/javascript">
 
-		function videoListeners(){
-			for(let vid of document.querySelectorAll("[data-path]")){
-				vid.addEventListener("click", function(e){
-					e.target.classList.add("is-loading");
-					startVid(e);
-				});
+		function loadVideo(e){
+			removeListeners();
+			if(e.target.classList.contains("play")){
+                e.target.parentNode.parentNode.classList.add("loading");
+				startVid(e.target.parentNode.parentNode.dataset.path);
+            }else{
+                e.target.parentNode.classList.add("loading");
+				startVid(e.target.parentNode.dataset.path);
+            }
+		}
+
+		const vids = document.getElementsByClassName("vid");
+        function addListeners(){
+			for(let vid of vids) {
+        		vid.addEventListener("click", loadVideo);
 			}
 		}
-		videoListeners();
+		addListeners();
+		function removeListeners(){
+			for(let vid of vids) {
+        		vid.removeEventListener("click", loadVideo);
+			}
+		}
 
-		function startVid(e){
-			fetch(`/vid?path=${e.target.dataset.path}`)
+		function startVid(path){
+			fetch(`/vid?path=${path}`)
 			.then( res => {
 				return res.json();
 			})

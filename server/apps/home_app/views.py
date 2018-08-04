@@ -28,7 +28,10 @@ def test(req):
 	return redirect("/")
 
 def anime(req, anime_id):
-	return render(req, 'home_app/anime.html', {"anime": Anime.objects.get(id=anime_id)})
+	anime = Anime.objects.get(id=anime_id)
+	videos = anime.videos.all().order_by('episode_number')
+
+	return render(req, 'home_app/anime.html', {"anime": anime, 'videos': videos})
 
 def vid(req):
 	# should probably implement some sort of wait here!

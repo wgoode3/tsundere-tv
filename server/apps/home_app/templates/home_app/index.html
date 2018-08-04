@@ -5,6 +5,15 @@
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
 	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 	<style>
+		html {
+			background-color: #363636;
+			overflow: hidden;
+			background-image: url("/static/home_app/img/footer_lodyas/footer_lodyas.png");
+		}
+		p {
+			text-align: center;
+			color: #ddd;
+		}
 		.column {
 			position: relative;
 			margin: 10px 0px;
@@ -12,7 +21,7 @@
 		}
 		.column:hover {
 			cursor:pointer;
-			background-color: #eee;
+			background-color: #2229;
 		}
 		.column img {
 			width: 100%;
@@ -25,17 +34,75 @@
 			bottom: 0 ;
 			right: 10px;
 		}
+		.columns {
+			padding-right: 16px !important;
+		}
+		.container {
+			height: calc(100vh - 62px);
+			background-color: #fff1;
+			margin-top: 62px;
+			padding: 0 10px;
+			overflow-y: auto; 
+			overflow-y: overlay;
+			overflow-x: hidden;
+		}
 	</style>
 	{% load static %}
 </head>
 <body>
 
+	<nav class="navbar is-fixed-top is-dark">
+		<div class="navbar-brand">
+			<a class="navbar-item" href="/">
+				<img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
+			</a>
+			<div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
+				<span></span><span></span><span></span>
+			</div>
+		</div>
+		
+		<div id="navbarExampleTransparentExample" class="navbar-menu">
+			<div class="navbar-start">
+				<a class="navbar-item" href="/">Home</a>
+				<div class="navbar-item has-dropdown is-hoverable">
+					<a class="navbar-link" href="#!">Other</a>
+					<div class="navbar-dropdown is-boxed">
+						<a class="navbar-item" href="#!">About</a>
+						<a class="navbar-item" href="#!">Settings</a>
+					</div>
+				</div>
+			</div>
+			<div class="navbar-end">
+				<div class="navbar-item">
+					<div class="field is-grouped">
+						<p class="control">
+							<a href="/test" class="button is-info" id="thingy">
+								<span class="icon"><i class="fas fa-cogs"></i></span>
+								<span>Search for files</span>
+							</a>
+						</p>
+					</div>
+				</div>
+				<div class="navbar-item">
+					<div class="field is-grouped">
+						<p class="control">
+							<a class="button is-link" href="#!">
+								<span class="icon"><i class="fas fa-arrow-circle-left"></i></span>
+								<span>Logout</span>
+							</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</nav>
+
 	<div class="container">
-		<div class="hero is-primary">
+		<!-- <div class="hero is-primary">
 		    <div class="hero-body is-bold">
 		        <h1 class="title">Video Server</h1>
 		    </div>
-		</div>
+		</div> -->
 	
 		{% for a in anime %}
 			{% if forloop.counter0 == 0 %}
@@ -54,12 +121,6 @@
 			{% endif %}
 
 		{% endfor %}
-
-		<a href="/test">
-			<button class="button is-info" id="thingy">
-				Search for files
-			</button>
-		</a>
 
 	</div>
 

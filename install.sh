@@ -4,7 +4,7 @@ cd ..
 apt-get build-dep nginx
 apt-get source nginx
 git clone https://github.com/ut0mt8/nginx-rtmp-module/
-cd nginx-1.10.3
+cd nginx-1.14.0
 ./configure --add-module=../nginx-rtmp-module
 make
 make install
