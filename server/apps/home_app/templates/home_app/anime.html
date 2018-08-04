@@ -6,11 +6,10 @@
 	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 	<style>
 		html {
+			/* background-color: #123; */
 			background-color: #363636;
-		}
-		html {
 			overflow: hidden;
-			background-image: url("/static/home_app/img/footer_lodyas/footer_lodyas.png");
+			/* background-image: url("/static/home_app/img/footer_lodyas/footer_lodyas.png"); */
 		}
 		p, details, .title {
 			color: #ddd;
@@ -103,6 +102,15 @@
 		.card .title {
 			text-align: center;
 		}
+		canvas {
+			position:absolute;
+			left:0;
+			top:0;
+			z-index:-1;
+		}
+		.navbar {
+			background-color: transparent !important;
+		}
 	</style>
 	{% load static %}
 </head>
@@ -133,7 +141,7 @@
 				<div class="navbar-item">
 					<div class="field is-grouped">
 						<p class="control">
-							<a class="button is-link" href="/">
+							<a class="button is-info is-outlined" href="/">
 								<span class="icon"><i class="fas fa-arrow-circle-left"></i></span>
 								<span>Back</span>
 							</a>
@@ -254,6 +262,7 @@
 		}
 
 	</script>
+	<script type="text/javascript" src="/static/home_app/js/nodegarden.js"></script>
 
 </body>
 </html>
