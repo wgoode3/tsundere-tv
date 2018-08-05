@@ -1,35 +1,17 @@
+/* an attempt at merging index.html and anime.html styles into one stylesheet */
+
 html {
     /* background-color: #123; */
     background-color: #363636;
     overflow: hidden;
     /* background-image: url("/static/home_app/img/footer_lodyas/footer_lodyas.png"); */
 }
-/* p {
-    text-align: center;
-    color: #ddd;
-} */
 .column {
     position: relative;
     margin: 10px 0px;
-    /*min-height: 300px;*/
-}
-.column:hover {
-    cursor:pointer;
-    background-color: #2229;
-}
-.column img {
-    width: 100%;
 }
 .column p {
     word-wrap: break-word;
-}
-[data-path] {
-    position: absolute;
-    bottom: 0 ;
-    right: 10px;
-}
-.columns {
-    padding-right: 16px;
 }
 .container {
     height: calc(100vh - 62px);
@@ -50,9 +32,7 @@ canvas {
     background-color: transparent !important;
 }
 
-
 /* 2 */
-
 
 p, details, .title {
     color: #ddd;
@@ -116,11 +96,6 @@ p, details, .title {
     to { transform:rotate(360deg); }
 }
 .float-right { float: right; }
-/* .container {
-    margin-top: 62px;
-    background-color: #fff1;
-    padding: 0 10px;
-} */
 .right-col {
     max-height: calc(100vh - 62px);
     overflow: auto;
@@ -145,5 +120,6 @@ figure.image {
 .card .title {
     text-align: center;
 }
-
-
+.navbar-start, .navbar-brand, .navbar-end {
+    padding: 0 10px;
+} 
