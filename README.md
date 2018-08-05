@@ -1,3 +1,3 @@
-# Video Server
+# tsundere-tv
 
-Work in progress Media Center
+It's not like I want to host your anime, baka~!
