@@ -4,59 +4,7 @@
 	<title>Home</title>
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
 	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-	<style>
-		html {
-			/* background-color: #123; */
-			background-color: #363636;
-			overflow: hidden;
-			/* background-image: url("/static/home_app/img/footer_lodyas/footer_lodyas.png"); */
-		}
-		p {
-			text-align: center;
-			color: #ddd;
-		}
-		.column {
-			position: relative;
-			margin: 10px 0px;
-			/*min-height: 300px;*/
-		}
-		.column:hover {
-			cursor:pointer;
-			background-color: #2229;
-		}
-		.column img {
-			width: 100%;
-		}
-		.column p {
-			word-wrap: break-word;
-		}
-		[data-path] {
-			position: absolute;
-			bottom: 0 ;
-			right: 10px;
-		}
-		.columns {
-			padding-right: 16px !important;
-		}
-		.container {
-			height: calc(100vh - 62px);
-			background-color: #fff1;
-			margin-top: 62px;
-			padding: 0 10px;
-			overflow-y: auto; 
-			overflow-y: overlay;
-			overflow-x: hidden;
-		}
-		canvas {
-			position:absolute;
-			left:0;
-			top:0;
-			z-index:-1;
-		}
-		.navbar {
-			background-color: transparent !important;
-		}
-	</style>
+	<link rel="stylesheet" href="/static/home_app/css/style.css">
 	{% load static %}
 </head>
 <body>
@@ -108,11 +56,6 @@
 	</nav>
 
 	<div class="container">
-		<!-- <div class="hero is-primary">
-		    <div class="hero-body is-bold">
-		        <h1 class="title">Video Server</h1>
-		    </div>
-		</div> -->
 	
 		{% for a in anime %}
 			{% if forloop.counter0 == 0 %}
@@ -134,25 +77,7 @@
 
 	</div>
 
-	<script type="text/javascript">
-		document.getElementById("thingy").addEventListener("click", function(e){
-			document.getElementById("thingy").classList.add("is-loading");
-		});
-
-		function animeListeners(){
-			for(let anime of document.querySelectorAll("[data-anime]")){
-				anime.addEventListener("click", function(e){
-					if(e.target.nodeName == "DIV") {
-						window.location = `/anime/${e.target.dataset.anime}`;
-					} else {
-						window.location = `/anime/${e.target.parentNode.dataset.anime}`;
-					}
-				});
-			}
-		}
-		animeListeners();
-
-	</script>
+	<script type="text/javascript" src="/static/home_app/js/index.js"></script>
 	<script type="text/javascript" src="/static/home_app/js/nodegarden.js"></script>
 
 </body>

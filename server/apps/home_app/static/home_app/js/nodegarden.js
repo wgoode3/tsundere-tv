@@ -6,7 +6,7 @@ const fillStyle    = "#ffffff";
 const strokeStyle  = "191,191,191";
 const gravConstant = 3;
 const selector     = document.querySelector("body");
-const disable      = document.getElementById("disable");
+// const disable      = document.getElementById("disable");
 
 (function () {
   'use strict';
@@ -220,8 +220,8 @@ const disable      = document.getElementById("disable");
   });
 
   // disables/enables the animation when clicked
-  disable.addEventListener("click", function() {
-    nodeGarden.playing ? nodeGarden.stop(): nodeGarden.start();
-  });
+  // disable.addEventListener("click", function() {
+  //   nodeGarden.playing ? nodeGarden.stop(): nodeGarden.start();
+  // });
 
 })();

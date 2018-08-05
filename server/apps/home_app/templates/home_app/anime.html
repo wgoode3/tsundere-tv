@@ -4,113 +4,10 @@
 	<title>Home</title>
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
 	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+	<link rel="stylesheet" href="/static/home_app/css/style.css">
 	<style>
-		html {
-			/* background-color: #123; */
-			background-color: #363636;
-			overflow: hidden;
-			/* background-image: url("/static/home_app/img/footer_lodyas/footer_lodyas.png"); */
-		}
-		p, details, .title {
-			color: #ddd;
-		}
-		.video-block:hover {
-			background-color: #2229;
-		}
-		.vid {
-			position: relative;
-		}
-		.column img {
-			width: 100%;
-		}
-		.column p {
-			word-wrap: break-word;
-		}
-		.vid img {
-			opacity: 1;
-			display: block;
-			width: 100%;
-			height: auto;
-			transition: .25s ease;
-			backface-visibility: hidden;
-		}
-		.middle {
-			opacity: 0;
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			-ms-transform: translate(-50%, -50%);
-			text-align: center;
-			transition: .25s ease;
-		}
-		.vid:hover { cursor: pointer; }
-		.vid:hover img { filter: brightness(50%) }
-		.vid:hover .middle { opacity: 1; }
-		.play {
-			width: 0; 
-			height: 0; 
-			border-top: 25px solid transparent;
-			border-bottom: 25px solid transparent;
-			border-left: 50px solid #fffc;
-		}
-		.loading img { filter: brightness(50%) }
-		.loading .middle { opacity: 1; }
-		.loading .play {
-			height: 40px;
-			width: 40px;
-			border-radius: 50%;
-			background-color: transparent;
-			border: 10px solid #fffc;
-			border-bottom-color: transparent;
-			animation-name: spin;
-			animation-duration: 1000ms;
-			animation-iteration-count: infinite;
-			animation-timing-function: linear;
-		}
-		@keyframes spin {
-			from { transform:rotate(0deg); }
-			to { transform:rotate(360deg); }
-		}
-		.float-right { float: right; }
-		.container {
-			margin-top: 62px;
-			background-color: #fff1;
-			padding: 0 10px;
-		}
-		.right-col {
-			max-height: calc(100vh - 62px);
-			overflow: auto;
-		}
-		.left-col { 
-			max-height: calc(100vh - 62px); 
-			overflow: hidden;
-		}
-		.left-col:hover { 
-			overflow: auto; 
-			overflow-y: overlay;
-			overflow-x: hidden;
-		}
-		figure.image {
-			margin: 0 auto;
-			width: 72%;
-		}
-		.card {
-			background-color: transparent;
-			box-shadow: none;
-		}
-		.card .title {
-			text-align: center;
-		}
-		canvas {
-			position:absolute;
-			left:0;
-			top:0;
-			z-index:-1;
-		}
-		.navbar {
-			background-color: transparent !important;
-		}
+		.container { overflow: hidden; }
+		.columns { padding-right: 5px; }
 	</style>
 	{% load static %}
 </head>
@@ -214,54 +111,7 @@
 		</div>
 	</div>
 
-	<script type="text/javascript">
-
-		function loadVideo(e){
-			removeListeners();
-			if(e.target.classList.contains("play")){
-                e.target.parentNode.parentNode.classList.add("loading");
-				startVid(e.target.parentNode.parentNode.dataset.path);
-            }else{
-                e.target.parentNode.classList.add("loading");
-				startVid(e.target.parentNode.dataset.path);
-            }
-		}
-
-		const vids = document.getElementsByClassName("vid");
-        function addListeners(){
-			for(let vid of vids) {
-        		vid.addEventListener("click", loadVideo);
-			}
-		}
-		addListeners();
-		function removeListeners(){
-			for(let vid of vids) {
-        		vid.removeEventListener("click", loadVideo);
-			}
-		}
-
-		function startVid(path){
-			fetch(`/vid?path=${path}`)
-			.then( res => {
-				return res.json();
-			})
-			.then( data => {
-				watchWhenReady(`http://${data.host}/dash/${data.key}.mpd`, data.key);
-			})
-		}
-
-		function watchWhenReady(url, key){
-			fetch(url).then(function(res){
-				console.log(res.status);
-				if(res.status != 200){
-					setTimeout(function(){watchWhenReady(url, key);}, 1000);
-				} else {
-					window.location = `/watch?key=${key}`;
-				}
-			});
-		}
-
-	</script>
+	<script type="text/javascript" src="/static/home_app/js/anime.js"></script>
 	<script type="text/javascript" src="/static/home_app/js/nodegarden.js"></script>
 
 </body>

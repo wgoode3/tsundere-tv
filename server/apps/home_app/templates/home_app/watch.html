@@ -4,30 +4,8 @@
 	<title>{{key}}</title>
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
 	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-	<style type="text/css">
-		html {
-			overflow: hidden;
-			background-color: #363636;
-			/* background-image: url("/static/home_app/img/footer_lodyas/footer_lodyas.png"); */
-		}
-		body {
-			text-align: center;
-		}
-		video {
-			height: 100vmin;
-		}
-		.navbar {
-			background-color: #fff9;
-			transition: .25s ease;
-		}
-		#back {
-			position: absolute;
-			bottom: 10px;
-			right: 10px;
-		}
-	</style>
-	<!-- <script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script> -->
 	<script type="text/javascript" src="/static/home_app/js/dash.min.js"></script>
+	<link rel="stylesheet" href="/static/home_app/css/player.css">
 </head>
 <body>
 
@@ -74,44 +52,7 @@
 		<span>Back</span>
 	</a>
 
-	<script>
-		const vid = document.getElementById("vid");
-
-		if (window.MediaSource) {
-			player = dashjs.MediaPlayer().create();
-			player.initialize(vid, null, true);
-			player.setFastSwitchEnabled(true);
-			// console.log(player);
-			player.reset()
-		} else {
-			let src = vid.src;
-			src = src.replace("/dash/", "/hls/");
-			video_element.src = src;
-		}
-
-		// detect mouse inactive from
-		// https://stackoverflow.com/questions/667555/how-to-detect-idle-time-in-javascript-elegantly
-		var inactivityTime = function () {
-			var t;
-			window.onload = resetTimer;
-			document.onmousemove = resetTimer;
-			document.onkeypress = resetTimer;
-
-			function hidenav() {
-				document.getElementById("nav").style.opacity = 0;
-				document.querySelector("body").style.cursor = "none";
-			}
-
-			function resetTimer() {
-				document.getElementById("nav").style.opacity = 1;
-				document.querySelector("body").style.cursor = "auto";
-				clearTimeout(t);
-				t = setTimeout(hidenav, 3000)
-			}
-		};
-		inactivityTime();
-
-	</script>
+	<script type="text/javascript" src="/static/home_app/js/watch.js"></script>
 
 </body>
 </html>
