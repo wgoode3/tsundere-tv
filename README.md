@@ -1,4 +1,4 @@
-<img src="https://github.com/wgoode3/tsundere-tv/blob/master/demo.gif?raw=true" alt="demo.gif" />
+# <img src="https://github.com/wgoode3/tsundere-tv/blob/master/demo.gif?raw=true" alt="demo.gif" />
 
 # tsundere-tv
 
