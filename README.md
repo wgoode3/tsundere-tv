@@ -2,7 +2,9 @@
 
 # tsundere-tv
 
-``` "It's not like I want to host your anime, baka~!" ```
+``` 
+"It's not like I want to host your anime, baka~!" 
+```
 
 Home anime media server in the style of Plex, recursively searches for, categorizes, and displays media on the host system for transcoding and streaming to a web client. 
 
