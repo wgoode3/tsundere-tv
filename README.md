@@ -11,6 +11,7 @@ Home anime media server in the style of Plex, recursively searches for, categori
 ### Technologies used: 
 * Python
 * Django
+* Angular
 * [nginx-rtmp-module](https://github.com/ut0mt8/nginx-rtmp-module)
 * FFmpeg
 * [MPEG-DASH (dash.js)](https://github.com/Dash-Industry-Forum/dash.js)
