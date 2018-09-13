@@ -1,0 +1,12 @@
+.avatar {
+    height: 50px;
+    border-radius: 50%;
+}
+
+.img-upload input[type=file] {
+    display: none;
+}
+
+label {
+    color: #eee !important;
+}

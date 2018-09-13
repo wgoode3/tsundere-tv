@@ -1,0 +1,12 @@
+<form>
+  <label class="img-upload">
+    <img class="avatar" src="/media/avatars/{{ user.avatar }}" alt="{{ user.avatar }}" />
+    <input type="file" name="img" (change)="changeAvatar($event)" />
+  </label>
+</form>
+<p>
+  Username: {{ user.username }}<br>
+  Email: {{ user.email }}<br>
+  <button class="button is-info">Edit</button>
+</p>
+<hr>
