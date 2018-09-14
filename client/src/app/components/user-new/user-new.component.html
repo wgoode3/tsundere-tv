@@ -1,86 +1,53 @@
 <form (submit)="register()">
     
-    <div class="field is-horizontal">
-        <div class="field-label is-normal">
+    <div class="columns">
+        <div class="column field">
             <label class="label">Your Username</label>
-        </div>
-        <div class="field-body">
-            <div class="field">
-                <p class="control has-icons-left">
-                    <input class="input" type="text" name="user.username" [(ngModel)]="user.username" autocomplete="new-username" />
-                    <span class="icon is-small is-left">
-                        <i class="fas fa-user"></i>
-                    </span>
-                </p>
+            <div class="control has-icons-left">
+                <input class="input" type="text" name="user.username" [(ngModel)]="user.username" autocomplete="new-username" />
+                <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                </span>
                 <p *ngIf="errors.username" class="help is-danger">{{errors.username}}</p>
             </div>
         </div>
     </div>
 
-    <div class="field is-horizontal">
-        <div class="field-label is-normal">
-            <label class="label">Your Email</label>
-        </div>
-        <div class="field-body">
-            <div class="field">
-                <p class="control has-icons-left">
-                    <input class="input" type="text" name="user.email" [(ngModel)]="user.email" autocomplete="new-email" />
-                    <span class="icon is-small is-left">
-                        <i class="fas fa-envelope"></i>
-                    </span>
-                </p>
-                <p *ngIf="errors.email" class="help is-danger">{{errors.email}}</p>
-            </div>
-        </div>
-    </div> 
-
-
-    <div class="field is-horizontal">
-        <div class="field-label is-normal">
+    <div class="columns">
+        <div class="column field">
             <label class="label">Your Password</label>
-        </div>
-        <div class="field-body">
-            <div class="field">
-                <p class="control has-icons-left">
-                    <input class="input" type="password" name="user.password" [(ngModel)]="user.password" autocomplete="new-password" />
-                    <span class="icon is-small is-left">
-                        <i class="fas fa-lock"></i>
-                    </span>
-                </p>
+            <div class="control has-icons-left">
+                <input class="input" type="password" name="user.password" [(ngModel)]="user.password" autocomplete="new-password" />
+                <span class="icon is-small is-left">
+                    <i class="fas fa-lock"></i>
+                </span>
                 <p *ngIf="errors.password" class="help is-danger">{{errors.password}}</p>
             </div>
         </div>
-    </div> 
-
-    <div class="field is-horizontal">
-            <div class="field-label is-normal">
-                <label class="label">Confirm Password</label>
-            </div>
-            <div class="field-body">
-                <div class="field">
-                    <p class="control has-icons-left">
-                        <input class="input" type="password" name="user.confirm" [(ngModel)]="user.confirm" autocomplete="new-password" />
-                        <span class="icon is-small is-left">
-                            <i class="fas fa-check"></i>
-                        </span>
-                    </p>
-                    <p *ngIf="errors.confirm" class="help is-danger">{{errors.confirm}}</p>
-                </div>
+    
+        <div class="column field">
+            <label class="label">Confirm Password</label>
+            <div class="control has-icons-left">
+                <input class="input" type="password" name="user.confirm" [(ngModel)]="user.confirm" autocomplete="new-confirm" />
+                <span class="icon is-small is-left">
+                    <i class="fas fa-check"></i>
+                </span>
+                <p *ngIf="errors.confirm" class="help is-danger">{{errors.confirm}}</p>
             </div>
         </div>
+    </div>
 
-    <input type="submit" value="Submit" class="button is-primary"/>
+    <div class="columns">
+        <div class="column">
+            <input type="submit" value="Submit" class="button is-primary"/>
+        </div>
+    </div>
 
 </form>
+
+<br><br>
 
 <p>Users:</p>
 <hr>
 <app-user *ngFor="let user of users" [user]="user"></app-user>
 
-<!-- <form (submit)="register(image.value, filename.value)"></form> -->
-<!-- <p>
-    Image: 
-    <input type="file" name="img" onchange="previewFile()"/>
-</p>
-<input type="hidden" name="user.image" [(ngModel)]="user.image" id="img" [value]="" #image>
-<input type="hidden" name="user.filename" [(ngModel)]="user.filename" id="filename" [value]="" #filename> -->

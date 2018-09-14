@@ -17,12 +17,6 @@ class UserManager(models.Manager):
         elif len(data['username']) < 3:
             errors['username'] = 'Username must be 3 characters or longer!'
 
-        """ email validations """
-        if len(data['email']) < 1:
-            errors['email'] = 'Email is required!'
-        elif not EMAIL_REGEX.match(data['email']):
-            errors['email'] = 'Invalid email!'
-
         """ password validations """
         if len(data['password']) < 1:
             errors['password'] = 'Password is required!'
@@ -41,7 +35,6 @@ class UserManager(models.Manager):
         else:
             return User.objects.create(
                 username = data['username'],
-                email = data['email'].lower(),
                 password = bcrypt.hashpw(data['password'].encode(), bcrypt.gensalt()).decode()
             )
     
@@ -57,15 +50,15 @@ class UserManager(models.Manager):
                     img.write(base64.b64decode(data['image'].split(',')[-1]))
                     user.avatar = data['filename']
         user.username = data['username']
-        user.email = data['email']
         user.save()
         return True
 
 class User(models.Model):
     username = models.CharField(max_length=255)
-    email = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
     avatar = models.CharField(max_length=255, default="unknown.jpg")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     objects = UserManager()
     

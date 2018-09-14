@@ -1,5 +1,5 @@
 .avatar {
-    height: 50px;
+    height: 48px;
     border-radius: 50%;
 }
 
@@ -9,4 +9,8 @@
 
 label {
     color: #eee !important;
+}
+
+form, p {
+    display: inline-block;
 }
