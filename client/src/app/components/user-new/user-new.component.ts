@@ -11,6 +11,8 @@ export class UserNewComponent implements OnInit {
   user = {username: '', email: '', password: '', confirm: ''};
   users = [];
   errors = {};
+  login_user = {};
+  login_errors = {};
 
   constructor(private _userService:UserService){
   }

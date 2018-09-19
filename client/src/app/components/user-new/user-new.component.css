@@ -1,0 +1,83 @@
+.log-reg {
+    width: 640px;
+    margin: 0 auto;
+}
+
+.log-reg > .box {
+    height: 400px;
+}
+
+.log-reg > .hero {
+    height: 80px;
+}
+
+.title {
+    margin-top: -25px !important;
+}
+
+.hero {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px; 
+}
+
+.box {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px; 
+    background-color: #2222;
+}
+
+.columns, .column {
+    margin: 0;
+}
+
+input {
+    background-color: transparent;
+    border-radius: 0px;
+    border: 0 solid transparent;
+    border-bottom: 1px solid #fff;
+    caret-color: #fff;
+    color: #fff;
+    box-shadow: none;
+}
+
+input:focus {
+    box-shadow: none;
+}
+
+a {
+    color: #fff;
+}
+
+li.is-active > a {
+    background-color: transparent;
+    color: #ccc;
+}
+
+.newuser {
+    padding: 10px;
+    border: 0 !important;
+    background-color: #fff1;
+    box-shadow: none;
+}
+
+.media { 
+    height: 48px;
+}
+
+.image {
+    margin-top: 0;
+}
+
+strong {
+    color: #ddd;
+    line-height: 48px;
+}
+
+.icon {
+    color: #fff;
+}
+
+.newuser:hover {
+    background-color: #fff2;
+    cursor: pointer;
+}

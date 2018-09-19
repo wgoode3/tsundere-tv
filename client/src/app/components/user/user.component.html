@@ -1,4 +1,4 @@
-<form>
+<!-- <form>
   <label class="img-upload">
     <img class="avatar" src="/media/avatars/{{ user.avatar }}" alt="{{ user.avatar }}" />
     <input type="file" name="img" (change)="changeAvatar($event)" />
@@ -7,4 +7,21 @@
 <p>
   {{ user.username }}<br>
 </p>
-<hr>
+<hr> -->
+
+<div class="box user">
+    <article class="media">
+        <div class="media-left">
+            <figure class="image is-48x48">
+                <img class="avatar" src="/media/avatars/{{ user.avatar }}" alt="{{ user.avatar }}" />
+            </figure>
+        </div>
+        <div class="media-content">
+            <div class="content">
+                <p>
+                    <strong>{{ user.username }}</strong>
+                </p>
+            </div>
+        </div>
+    </article>
+</div>

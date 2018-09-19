@@ -1,10 +1,38 @@
-.avatar {
-    height: 48px;
+/* .avatar {
     border-radius: 50%;
 }
 
 .img-upload input[type=file] {
     display: none;
+} */
+
+.user {
+    padding: 10px;
+    border: 0 !important;
+    background-color: #fff1;
+    box-shadow: none;
+}
+
+.user:hover {
+    background-color: #fff2;
+    cursor: pointer;
+}
+
+.media { 
+    height: 48px;
+}
+
+.image {
+    margin-top: 0;
+}
+
+.avatar {
+    border-radius: 50%;
+}
+
+strong {
+    color: #ddd;
+    line-height: 48px;
 }
 
 label {
@@ -14,3 +42,4 @@ label {
 form, p {
     display: inline-block;
 }
+

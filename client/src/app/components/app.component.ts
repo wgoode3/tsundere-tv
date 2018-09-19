@@ -8,7 +8,14 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'tsundere.tv';
 
+
   constructor(){
+  }
+
+  ngOnInit(){
+    // localStorage.setItem("example", "this is an example");
+    // localStorage.clear();
+    // console.log(localStorage.getItem("example"));
   }
 
 }

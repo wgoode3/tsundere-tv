@@ -57,9 +57,6 @@ class VideoManager(models.Manager):
         return True
 
 class Video(models.Model):
-    """
-    check documentation for a field for file paths
-    """
     path = models.CharField(max_length=255)
     filename = models.CharField(max_length=255)
     fansub_group = models.CharField(max_length=255)
