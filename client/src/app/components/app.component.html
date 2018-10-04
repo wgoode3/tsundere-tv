@@ -1,4 +1,3 @@
-
 <!-- Default navbar -->
 <nav class="navbar is-fixed-top is-dark">
     <div class="navbar-brand">
@@ -12,7 +11,7 @@
   
     <div id="navbarExampleTransparentExample" class="navbar-menu">
         <div class="navbar-start">
-            <a class="navbar-item" [routerLink]="['']">Home</a>
+            <a class="navbar-item" [routerLink]="['/']">Home</a>
             <div class="navbar-item has-dropdown is-hoverable">
                 <a class="navbar-link" href="#!">Other</a>
                 <div class="navbar-dropdown is-boxed">
@@ -21,35 +20,29 @@
                 </div>
             </div>
         </div>
-        <div class="navbar-end">
-            <!-- <div class="navbar-item">
-                <div class="field is-grouped">
-                    <p class="control">
-                        <a href="/test" class="button is-primary is-outlined" id="thingy">
-                            <span class="icon"><i class="fas fa-cogs"></i></span>
-                            <span>Search for files</span>
-                        </a>
-                    </p>
+        <div class="navbar-end" *ngIf="!user">
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link" href="#!">
+                    <span class="icon"><i class="fas fa-user-circle"></i></span>
+                    <span>User</span>
+                </a>
+                <div class="navbar-dropdown is-boxed">
+                    <a class="navbar-item" [routerLink]="['/user/login']">Sign In</a>
+                    <a class="navbar-item" [routerLink]="['/user/new']">Sign Up</a>
                 </div>
-            </div> -->
-            <!-- <div class="navbar-item">
-                <div class="field is-grouped">
-                    <p class="control">
-                        <a class="button is-info is-outlined" href="#!">
-                            <span class="icon"><i class="fas fa-arrow-circle-left"></i></span>
-                            <span>Sign Out</span>
-                        </a>
-                    </p>
-                </div>
-            </div> -->
-            <div class="navbar-item">
-                <div class="field is-grouped">
-                    <p class="control">
-                        <a class="button is-primary is-outlined" [routerLink]="['/user/new']">
-                            <span class="icon"><i class="fas fa-user-circle"></i></span>
-                            <span>User</span>
-                        </a>
-                    </p>
+            </div>
+        </div>
+        <div class="navbar-end" *ngIf="user">
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link" href="#!">
+                    <figure class="image is-24x24">
+                        <img class="avatar" src="/media/avatars/{{ user.avatar }}" alt="{{ user.avatar }}" />
+                    </figure>
+                    <span>{{ user.username }}</span>
+                </a>
+                <div class="navbar-dropdown is-boxed">
+                    <a class="navbar-item" [routerLink]="['user', user.id]">User</a>
+                    <a class="navbar-item" (click)="logout()">Sign Out</a>
                 </div>
             </div>
         </div>
@@ -57,4 +50,4 @@
 </nav>
 
 <!-- Components load here -->
-<router-outlet></router-outlet>
+<router-outlet (activate)="onActivate($event)"></router-outlet>

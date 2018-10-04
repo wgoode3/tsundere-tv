@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-new',
@@ -11,10 +12,8 @@ export class UserNewComponent implements OnInit {
   user = {username: '', email: '', password: '', confirm: ''};
   users = [];
   errors = {};
-  login_user = {};
-  login_errors = {};
 
-  constructor(private _userService:UserService){
+  constructor(private _userService:UserService, private _router: Router){
   }
 
   ngOnInit(){
@@ -28,19 +27,10 @@ export class UserNewComponent implements OnInit {
       console.log("This is what we get back", data);
       if(data['errors']){
         this.errors = data['errors'];
+      }else{
+        this._router.navigate(['/']);
       }
     });
   }
-  // register(img, filename){
-  //   this.user['image'] = img;
-  //   this.user['filename'] = filename
-  //   this._userService.register(this.user).subscribe( data => {
-  //     console.log("This is what we get back", data);
-  //     if(data['errors']){
-  //       this.errors = data['errors'];
-  //     }
-  //   });
-  // }
-  
 
 }

@@ -5,6 +5,7 @@
 
 .log-reg > .box {
     height: 400px;
+    background-color: #363636;
 }
 
 .log-reg > .hero {
@@ -48,36 +49,10 @@ a {
     color: #fff;
 }
 
-li.is-active > a {
-    background-color: transparent;
+a:hover {
     color: #ccc;
+    text-decoration: underline;
+    transition: .25s ease;
 }
 
-.newuser {
-    padding: 10px;
-    border: 0 !important;
-    background-color: #fff1;
-    box-shadow: none;
-}
 
-.media { 
-    height: 48px;
-}
-
-.image {
-    margin-top: 0;
-}
-
-strong {
-    color: #ddd;
-    line-height: 48px;
-}
-
-.icon {
-    color: #fff;
-}
-
-.newuser:hover {
-    background-color: #fff2;
-    cursor: pointer;
-}

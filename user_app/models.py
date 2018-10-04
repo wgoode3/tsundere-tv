@@ -39,7 +39,11 @@ class UserManager(models.Manager):
             )
     
     def login(self, data):
-        print(data)
+        user = User.objects.get(id=data['id'])
+        if bcrypt.checkpw(data['password'].encode(), user.password.encode()):
+            return user
+        else:
+            return {'password': 'Incorrect password'}
         return True
 
     def update(self, data, user_id):

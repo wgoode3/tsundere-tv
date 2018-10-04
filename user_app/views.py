@@ -23,14 +23,23 @@ class UsersSession(View):
 
     """ Get session """
     def get(self, req):
-        return JsonResponse({'status': 200})
+        if 'user_id' in req.session:
+            return JsonResponse({'status': 200, 'user_id': req.session['user_id']})
+        else:
+            return JsonResponse({'status': 200})
 
     """ Login method """
     def post(self, req):
-        return JsonResponse({'status': 200})
+        results = User.objects.login(json.loads(req.body.decode()))
+        if isinstance(results, User):
+            req.session['user_id'] = results.id
+            return JsonResponse({'status': 200, 'user_id': results.id})
+        else:
+            return JsonResponse({'status': 200, 'errors': results})
 
     """ Logout method """
     def delete(self, req):
+        req.session.clear()
         return JsonResponse({'status': 200})
 
 class UsersDetail(View):

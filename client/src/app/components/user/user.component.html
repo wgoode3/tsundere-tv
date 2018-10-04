@@ -1,27 +1,50 @@
-<!-- <form>
-  <label class="img-upload">
-    <img class="avatar" src="/media/avatars/{{ user.avatar }}" alt="{{ user.avatar }}" />
-    <input type="file" name="img" (change)="changeAvatar($event)" />
-  </label>
-</form>
-<p>
-  {{ user.username }}<br>
-</p>
-<hr> -->
+<section class="section log-reg" *ngIf="user">
 
-<div class="box user">
-    <article class="media">
-        <div class="media-left">
-            <figure class="image is-48x48">
-                <img class="avatar" src="/media/avatars/{{ user.avatar }}" alt="{{ user.avatar }}" />
-            </figure>
+    <!-- box header -->
+    <div class="hero is-primary">
+        <div class="hero-body is-bold">
+            <h1 class="title">tsundere-tv</h1>
         </div>
-        <div class="media-content">
-            <div class="content">
-                <p>
-                    <strong>{{ user.username }}</strong>
-                </p>
-            </div>
+    </div>
+
+    <!-- box body -->
+    <div class="box">
+
+        <div class="columns">
+            <form class="column is-4">
+                <label class="img-upload">
+                    <figure class="image is-128x128">
+                        <img class="avatar" src="/media/avatars/{{ user.avatar }}" alt="{{ user.avatar }}" />
+                    </figure>
+                    <input type="file" name="img" (change)="changeAvatar($event)" />
+                </label>
+                <p class="centered">click to edit</p>
+            </form>
+            <form class="column is-8" (submit)="update(user.id)">
+                <div class="field">
+                    <label class="label">Your Username</label>
+                    <div class="control has-icons-left">
+                        <input class="input" type="text" name="user.username" [(ngModel)]="user.username" autocomplete="new-username" />
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-user"></i>
+                        </span>
+                        <p *ngIf="errors.username" class="help is-danger">{{errors.username}}</p>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Your Password</label>
+                    <div class="control has-icons-left">
+                        <input class="input" type="password" name="user.password" [(ngModel)]="user.password" autocomplete="new-password" />
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                        <p *ngIf="errors.password" class="help is-danger">{{errors.password}}</p>
+                    </div>
+                </div>
+                <input type="submit" value="Submit" class="button is-primary float-right" />
+            </form>
+            
         </div>
-    </article>
-</div>
+
+    </div>
+</section>

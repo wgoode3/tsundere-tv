@@ -54,62 +54,9 @@
                 </div>
             </div>
 
-            <a href="#!">Choose an existing account</a>
-        </form>
-
-    </div>
-</section>
-
-<section class="section log-reg">
-
-    <!-- box header -->
-    <div class="hero is-primary">
-        <div class="hero-body is-bold">
-            <h1 class="title">tsundere-tv</h1>
-        </div>
-    </div>
-
-    <!-- box body -->
-    <div class="box">
-
-        <!-- login form -->
-        <form (submit)="login()">
-
-            <div class="users">
-                <app-user *ngFor="let user of users" [user]="user" (click)="select(user)" class="user"></app-user>
-
-                <div class="box newuser">
-                    <article class="media">
-                        <div class="media-left">
-                            <figure class="image is-48x48">
-                                <span class="icon is-large">
-                                    <i class="fas fa-2x fa-user-plus"></i>
-                                </span>
-                            </figure>
-                        </div>
-                        <div class="media-content">
-                            <div class="content">
-                                <p><strong>New User</strong></p>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-            </div>
-
-            <div class="field">
-                <label class="label">Password</label>
-                <div class="control has-icons-left">
-                    <input class="input" type="password" name="login_user.password" [(ngModel)]="login_user.password" autocomplete="new-confirm" />
-                    <span class="icon is-small is-left">
-                        <i class="fas fa-lock"></i>
-                    </span>
-                    <p *ngIf="errors.confirm" class="help is-danger">{{login_errors.confirm}}</p>
-                </div>
-            </div>
-
             <div class="columns">
                 <div class="column">
-                    <input type="submit" value="Submit" class="button is-primary"/>
+                    <a [routerLink]="['/user/login']">Choose an existing account</a>
                 </div>
             </div>
 

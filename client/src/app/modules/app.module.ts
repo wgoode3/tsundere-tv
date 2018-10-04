@@ -14,6 +14,7 @@ import { AnimeComponent } from '../components/anime/anime.component';
 import { VideoComponent } from '../components/video/video.component';
 import { PlayerComponent } from '../components/player/player.component';
 import { UserComponent } from '../components/user/user.component';
+import { UserLoginComponent } from '../components/user-login/user-login.component';
 
 /* Services */
 import { UserService } from '../services/user.service';
@@ -27,7 +28,8 @@ import { VideoService } from '../services/video.service';
     AnimeComponent,
     VideoComponent,
     PlayerComponent,
-    UserComponent
+    UserComponent,
+    UserLoginComponent
   ],
   imports: [
     BrowserModule,
