@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { UserService } from '../../services/user.service';
+import { Component, OnInit } from '@angular/core';
+import { UserService } from '../../../services/user.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
@@ -34,6 +34,7 @@ export class UserComponent implements OnInit {
       _this.user['image'] = reader.result
       _this._userService.update(_this.user.id, _this.user).subscribe( data => {
         _this.ngOnInit();
+        _this._router.navigate([`/user/${_this.user.id}`]);
       });
     }, false);
     if (file) {

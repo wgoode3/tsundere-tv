@@ -6,6 +6,7 @@ import re, bcrypt, base64, os
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9.+_-]+\.[a-zA-Z]+$')
 
+
 class UserManager(models.Manager):
     def register(self, data):
 
@@ -16,6 +17,12 @@ class UserManager(models.Manager):
             errors['username'] = 'Username is required!'
         elif len(data['username']) < 3:
             errors['username'] = 'Username must be 3 characters or longer!'
+        else:
+            try:
+                User.objects.get(username=data['username'])
+                errors['username'] = 'Username is already in use!'
+            except User.DoesNotExist: 
+                pass
 
         """ password validations """
         if len(data['password']) < 1:
@@ -57,6 +64,7 @@ class UserManager(models.Manager):
         user.save()
         return True
 
+
 class User(models.Model):
     username = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
@@ -65,4 +73,9 @@ class User(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     objects = UserManager()
-    
+
+    def __repr__(self):
+        return "<User object: ({id}) ({username})>".format(id=self.id, username=self.username)
+
+    def __str__(self):
+        return "<User object: ({id}) ({username})>".format(id=self.id, username=self.username)

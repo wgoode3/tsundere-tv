@@ -17,6 +17,8 @@
                 <div class="navbar-dropdown is-boxed">
                     <a class="navbar-item" href="#!">About</a>
                     <a class="navbar-item" href="#!">Settings</a>
+                    <a class="navbar-item" (click)="search()">Search for media</a>
+                    <a class="navbar-item" (click)="reset()">reset the database</a>
                 </div>
             </div>
         </div>
@@ -49,5 +51,6 @@
     </div>
 </nav>
 
-<!-- Components load here -->
-<router-outlet (activate)="onActivate($event)"></router-outlet>
+<div class="container">
+    <router-outlet (activate)="onActivate($event)"></router-outlet>
+</div>

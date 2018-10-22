@@ -10,35 +10,35 @@ export class UserService {
   }
   
   allUsers(){
-    return this._http.get('/user');
+    return this._http.get('/api/user');
   }
 
   register(data){
-    return this._http.post("/user", data);
+    return this._http.post("/api/user", data);
   }
 
   login(data){
-    return this._http.post('/user/session', data);
+    return this._http.post('/api/user/session', data);
   }
 
   logout(){
-    return this._http.delete('/user/session');
+    return this._http.delete('/api/user/session');
   }
 
   session(){
-    return this._http.get('/user/session');
+    return this._http.get('/api/user/session');
   }
 
   getOne(id){
-    return this._http.get(`/user/${id}`);
+    return this._http.get(`/api/user/${id}`);
   }
 
   update(id, data){
-    return this._http.put(`/user/${id}`, data);
+    return this._http.put(`/api/user/${id}`, data);
   }
 
   delete(id){
-    return this._http.delete(`/user/${id}`);
+    return this._http.delete(`/api/user/${id}`);
   }
   
 }

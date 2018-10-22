@@ -10,19 +10,23 @@ export class VideoService {
   }
 
   getAll(){
-    return this._http.get('/videos');
+    return this._http.get('/api/videos');
   }
 
   getOne(id){
-    return this._http.get(`/videos/${id}`);
+    return this._http.get(`/api/videos/${id}`);
   }
 
   watch(id){
-    return this._http.get(`/videos/${id}/watch`);
+    return this._http.get(`/api/videos/${id}/watch`);
   }
 
-  search(id){
-    return this._http.get('/videos/search');
+  search(){
+    return this._http.get('/api/videos/search');
+  }
+
+  reset(){
+    return this._http.get('/api/videos/reset');
   }
 
 }

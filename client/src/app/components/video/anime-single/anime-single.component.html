@@ -1,0 +1,9 @@
+<div *ngIf="anime">
+  <div>
+    <h1>{{anime.title}}</h1>
+    <img src="{{anime.thumbnail}}" alt="{{anime.title}}">
+  </div>
+  
+  <app-video *ngFor="let video of videos" [video]="video"></app-video>
+
+</div>

@@ -4,6 +4,7 @@ import json
 from .models import User
 from django.views import View
 
+
 class Users(View):
 
     """ Get all """
@@ -18,6 +19,7 @@ class Users(View):
             return JsonResponse({'status': 200, 'user_id': results.id})
         else:
             return JsonResponse({'status': 200, 'errors': results})
+
 
 class UsersSession(View):
 
@@ -41,6 +43,7 @@ class UsersSession(View):
     def delete(self, req):
         req.session.clear()
         return JsonResponse({'status': 200})
+
 
 class UsersDetail(View):
 

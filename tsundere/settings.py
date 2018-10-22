@@ -19,8 +19,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'video_app',
-    'user_app',
+    'apps.video_app',
+    'apps.user_app',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
