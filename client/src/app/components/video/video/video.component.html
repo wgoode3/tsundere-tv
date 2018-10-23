@@ -1,2 +1,17 @@
-<img src="{{video.thumbnail}}" alt="{{video.filename}}">
-<p>{{video.filename}}</p>
+<div *ngIf="video" class="vid-block">
+    <div class="vid" (click)="play($event)">
+        <img src="{{video.thumbnail}}" alt="{{video.filename}}">
+        <div class="middle">
+            <div class="play"></div>
+        </div>
+    </div>
+    <p>{{ video.filename }}</p>
+    <details>
+        <summary>Details</summary>
+        <p>Group: {{ video.fansub_group }}</p>
+        <p>Episode: {{ video.episode_number }}</p>
+        <p>Duration: {{ video.duration }}</p>
+        <p>Subtitles: {{ video.subtitles }}</p>
+        <p>Filesize: {{ video.filesize }}</p>
+    </details>
+</div>

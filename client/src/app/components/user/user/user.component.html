@@ -16,9 +16,12 @@
                     <figure class="image is-128x128">
                         <img class="avatar" src="/media/avatars/{{ user.avatar }}" alt="{{ user.avatar }}" />
                     </figure>
+                    <div class="middle">
+                        <span class="icon img-icon"><i class="far fa-file-image"></i></span>
+                    </div>
                     <input type="file" name="img" (change)="changeAvatar($event)" />
+                    <p class="centered">click to edit</p>
                 </label>
-                <p class="centered">click to edit</p>
             </form>
             <form class="column is-8" (submit)="update(user.id)">
                 <div class="field">

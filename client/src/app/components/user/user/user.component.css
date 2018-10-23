@@ -92,7 +92,7 @@ input:focus {
     box-shadow: none;
 }
 
-img.avatar:hover {
+.img-upload:hover img.avatar {
     filter: brightness(50%);
 }
 
@@ -106,3 +106,24 @@ img.avatar:hover {
 .float-right {
     float: right;
 }
+
+/* new stuff here */
+
+.middle {
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+    transition: .25s ease;
+}
+
+.img-icon {
+    position: relative;
+    bottom: 30px;
+    transform: scale(3);
+}
+
+.img-upload:hover .middle { opacity: 1; }

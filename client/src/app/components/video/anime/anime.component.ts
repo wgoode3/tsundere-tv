@@ -1,5 +1,4 @@
 import { Component, OnInit, Input  } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-anime',
@@ -8,16 +7,12 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 })
 export class AnimeComponent implements OnInit {
 
-  constructor(private _router: Router) {
+  constructor() {
   }
 
   @Input() anime:any; 
 
   ngOnInit() {
-  }
-
-  info(){
-    this._router.navigate([`/anime/${this.anime.id}`]);
   }
 
 }

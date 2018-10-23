@@ -18,7 +18,7 @@ export class VideoService {
   }
 
   watch(id){
-    return this._http.get(`/api/videos/${id}/watch`);
+    return this._http.get(`/api/watch/${id}`);
   }
 
   search(){

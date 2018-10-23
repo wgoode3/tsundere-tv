@@ -47,7 +47,7 @@ def media_search(req):
 def get_all(req):
     return JsonResponse({
         'status': 200, 
-        'all_anime': list(Anime.objects.values().all())
+        'all_anime': list(Anime.objects.values().all().order_by("title"))
     })
 
 """ Return information about the anime with id: anime_id """
@@ -60,4 +60,5 @@ def get_anime(req, anime_id):
 
 """ Initiate the media transcoding in the backend && send the user to the video player """
 def watch_anime(req, video_id):
+    print(video_id)
     return JsonResponse({'status': 200, 'id': video_id})

@@ -57,8 +57,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
   search(){
     console.log("searching...");
+    // let hello = setInterval( () => { this._router.navigate(['/']); }, 1000);
     this._videoService.search().subscribe( data => {
       console.log(data);
+      // clearInterval(hello);
       this._router.navigate(['/']);
     });
   }

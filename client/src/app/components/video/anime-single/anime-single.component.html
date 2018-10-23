@@ -1,9 +1,39 @@
-<div *ngIf="anime">
-  <div>
-    <h1>{{anime.title}}</h1>
-    <img src="{{anime.thumbnail}}" alt="{{anime.title}}">
-  </div>
-  
-  <app-video *ngFor="let video of videos" [video]="video"></app-video>
-
+<div *ngIf="anime" class="outer">
+    <div class="columns">
+        <div class="column is-3 left-col">
+            <div class="card">
+                <div class="card-image">
+                    <figure class="image">
+                        <img src="{{ anime.thumbnail }}" alt="{{ anime.title }}">
+                    </figure>
+                </div>
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-content">
+                            <p class="title is-4">{{ anime.title }}</p>
+                        </div>
+                    </div>
+            
+                    <div class="content">
+                        <p>
+                            {{ anime.description }}
+                            <a href="{{ anime.mal_url }}">MAL</a><br>
+                            Score: {{ anime.mal_score }}<br>
+                            Type: {{ anime.anime_type }}<br>
+                            Episodes: {{ anime.episodes }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column is-9 right-col">
+            <div *ngFor="let video of videos; let i = index">
+                <div *ngIf="i%3==0" class="columns">
+                    <app-video *ngIf="videos[i]" [video]="videos[i]" class="column is-4"></app-video>
+                    <app-video *ngIf="videos[i+1]" [video]="videos[i+1]" class="column is-4"></app-video>
+                    <app-video *ngIf="videos[i+2]" [video]="videos[i+2]" class="column is-4"></app-video>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -10,7 +10,7 @@ urlpatterns = [
     
     path('api/videos', video.get_all),
     path('api/videos/<int:anime_id>', video.get_anime),
-    path('api/videos/<int:video-id>/watch', video.watch_anime),
+    path('api/watch/<int:video_id>', video.watch_anime),
     path('api/videos/search', video.media_search),
     path('api/videos/reset', video.reset),
     

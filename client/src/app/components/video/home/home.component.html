@@ -1,1 +1,12 @@
-<app-anime *ngFor="let anime of all_anime" [anime]="anime" class="anime"></app-anime>
+<div class="contents">
+    <div *ngFor="let anime of all_anime; let i = index">
+        <div *ngIf="i%6==0" class="columns">
+            <app-anime *ngIf="all_anime[i]" [anime]="all_anime[i]" class="column is-2"></app-anime>
+            <app-anime *ngIf="all_anime[i+1]" [anime]="all_anime[i+1]" class="column is-2"></app-anime>
+            <app-anime *ngIf="all_anime[i+2]" [anime]="all_anime[i+2]" class="column is-2"></app-anime>
+            <app-anime *ngIf="all_anime[i+3]" [anime]="all_anime[i+3]" class="column is-2"></app-anime>
+            <app-anime *ngIf="all_anime[i+4]" [anime]="all_anime[i+4]" class="column is-2"></app-anime>
+            <app-anime *ngIf="all_anime[i+5]" [anime]="all_anime[i+5]" class="column is-2"></app-anime>
+        </div>
+    </div>
+</div>

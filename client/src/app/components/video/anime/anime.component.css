@@ -1,5 +1,4 @@
 div {
-    height: 280px;
     padding: 10px;
     text-align: center;
 }
@@ -7,8 +6,4 @@ div {
 div:hover {
     background-color: #0003;
     cursor: pointer;
-}
-
-img {
-    max-height: 200px;
 }
