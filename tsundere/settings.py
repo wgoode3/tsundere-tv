@@ -13,7 +13,7 @@ SECRET_KEY = 'p7o+hrs^95t8yw)^_yy8f7*$^!1!fp0s-@&6v@u3vf5+2k+ge#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '192.168.0.105']
 
 
 # Application definition
@@ -124,3 +124,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 ALLOWED_EXTENSIONS = ('jpg', 'jpeg', 'png', 'gif')
+
+# TODO: programatically determine host when django starts up
+
+HOST = "192.168.0.105"

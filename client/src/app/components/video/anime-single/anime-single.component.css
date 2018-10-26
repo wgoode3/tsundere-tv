@@ -1,7 +1,48 @@
 .outer {
-    padding-right: 15px;
+    margin-top: 10px;
+    height: calc(100vh - 52px);
+}
+
+.left-col, .right-col {
+    /* margin-top: 10px; */
+    max-height: calc(100vh - 52px);
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+.left-col {
+    width: 240px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.right-col {
+    width: calc(100% - 240px);
+    display: inline-block;
+    vertical-align: top;
+    padding: 0 10px;
 }
 
 app-video {
     padding: 0;
+}
+
+.container {
+    min-width: 100% !important;
+    max-width: calc(100vw - 40px) !important;
+    height: calc(100vh - 52px);
+    background-color: #fff1;
+    overflow: hidden;
+    margin-top: 52px;
+    padding: 0 15px;
+}  
+
+/* on small screens hide the left column */
+@media only screen and (max-width: 480px) {
+    .left-col {
+        display: none;
+    }
+    .right-col {
+        width: 100%;
+    }
 }

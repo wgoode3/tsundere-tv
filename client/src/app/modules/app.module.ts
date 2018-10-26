@@ -16,6 +16,7 @@ import { VideoComponent } from '../components/video/video/video.component';
 import { PlayerComponent } from '../components/video/player/player.component';
 import { UserComponent } from '../components/user/user/user.component';
 import { UserLoginComponent } from '../components/user/user-login/user-login.component';
+import { SettingsComponent } from '../components/other/settings/settings.component';
 
 /* Services */
 import { UserService } from '../services/user.service';
@@ -31,7 +32,8 @@ import { VideoService } from '../services/video.service';
     VideoComponent,
     PlayerComponent,
     UserComponent,
-    UserLoginComponent
+    UserLoginComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

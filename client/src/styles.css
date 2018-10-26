@@ -2,6 +2,13 @@ html {
     background-color: #363636;
     overflow: hidden;
 }
+.container {
+    height: calc(100vh - 52px);
+    background-color: #fff1;
+    overflow: hidden;
+    margin-top: 52px;
+    padding: 0 20px;
+}  
 .column {
     position: relative;
     margin: 10px 0px;
@@ -9,15 +16,6 @@ html {
 .column p {
     word-wrap: break-word;
 }
-.container {
-    min-width: 100% !important;
-    max-width: calc(100vw - 40px) !important;
-    height: calc(100vh - 52px);
-    background-color: #fff1;
-    overflow: hidden;
-    margin-top: 52px;
-    padding: 0 20px;
-} 
 canvas {
     position:absolute;
     left:0;
@@ -30,79 +28,13 @@ canvas {
 p, details, .title {
     color: #ddd;
 }
-/* .video-block:hover {
-    background-color: #2229;
-    transition: .25s ease;
-} */
-/* .vid {
-    position: relative;
-} */
 .column img {
     width: 100%;
 }
 .column p {
     word-wrap: break-word;
 }
-/* .vid img {
-    opacity: 1;
-    display: block;
-    width: 100%;
-    height: auto;
-    transition: .25s ease;
-    backface-visibility: hidden;
-}
-.middle {
-    opacity: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    text-align: center;
-    transition: .25s ease;
-}
-.vid:hover { cursor: pointer; }
-.vid:hover img { filter: brightness(50%) }
-.vid:hover .middle { opacity: 1; }
-.play {
-    width: 0; 
-    height: 0; 
-    border-top: 25px solid transparent;
-    border-bottom: 25px solid transparent;
-    border-left: 50px solid #fffc;
-}
-.loading img { filter: brightness(50%) }
-.loading .middle { opacity: 1; }
-.loading .play {
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
-    background-color: transparent;
-    border: 10px solid #fffc;
-    border-bottom-color: transparent;
-    animation-name: spin;
-    animation-duration: 1000ms;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
-}
-@keyframes spin {
-    from { transform:rotate(0deg); }
-    to { transform:rotate(360deg); }
-} */
 .float-right { float: right; }
-.right-col {
-    max-height: calc(100vh - 62px);
-    overflow: auto;
-}
-.left-col { 
-    max-height: calc(100vh - 62px); 
-    overflow: hidden;
-}
-.left-col:hover { 
-    overflow: auto; 
-    overflow-y: overlay;
-    overflow-x: hidden;
-}
 figure.image {
     margin: 0 auto;
     margin-top: 10px;
@@ -120,4 +52,8 @@ figure.image {
 }  
 label {
     color: #eee !important;
+}
+
+.is-primary {
+    background-color: #7B4283 !important;
 }

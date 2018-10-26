@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { VideoService } from '../../../services/video.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-video',
@@ -10,7 +11,7 @@ export class VideoComponent implements OnInit {
 
   @Input() video: any;
 
-  constructor(private _videoService: VideoService) {
+  constructor(private _videoService: VideoService, private _router: Router) {
   }
 
   ngOnInit() {
@@ -26,6 +27,25 @@ export class VideoComponent implements OnInit {
     }
     this._videoService.watch(this.video.id).subscribe( data => {
       console.log(data);
+      localStorage.setItem("host", data['host']);
+      localStorage.setItem("key", data['key']);
+      localStorage.setItem("pid", data['pid']);
+      localStorage.setItem('video_id', data['id']);
+      localStorage.setItem('filename', data['video']['filename']);
+      localStorage.setItem('thumb', data['video']['thumbnail']);
+      let router = this._router;
+      let vid_id = this.video.id;
+      function fire_when_ready(){
+        fetch(`http://${data['host']}/dash/${data['key']}.mpd`).then( res => {
+          console.log(res.status);
+          if(res.status != 200){
+            setTimeout(function(){fire_when_ready();}, 1000);
+          }else{
+            router.navigate([`/watch/${vid_id}`]);
+          }
+        });
+      }
+      fire_when_ready();
     });
   }
 

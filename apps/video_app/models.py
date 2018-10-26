@@ -98,10 +98,10 @@ class Video(models.Model):
     objects = VideoManager()
 
     def __repr__(self):
-        return "<Video object: ({id}) ({filename})>".format(id=self.id, title=self.filename)
+        return "<Video object: ({id}) ({filename})>".format(id=self.id, filename=self.filename)
 
     def __str__(self):
-        return "<Video object: ({id}) ({filename})>".format(id=self.id, title=self.filename)
+        return "<Video object: ({id}) ({filename})>".format(id=self.id, filename=self.filename)
 
 
 """ keep track of what media a user has watched and where they stopped """

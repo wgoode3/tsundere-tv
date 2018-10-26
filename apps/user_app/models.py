@@ -2,7 +2,7 @@ from django.conf import settings
 from django.db import models
 from PIL import Image
 from io import BytesIO
-import re, bcrypt, base64, os
+import os, re, bcrypt, base64
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9.+_-]+\.[a-zA-Z]+$')
 
@@ -51,7 +51,6 @@ class UserManager(models.Manager):
             return user
         else:
             return {'password': 'Incorrect password'}
-        return True
 
     def update(self, data, user_id):
         user = User.objects.get(id=user_id)
@@ -60,9 +59,13 @@ class UserManager(models.Manager):
                 with open(os.path.join(settings.MEDIA_ROOT, 'avatars', data['filename']), 'wb') as img:
                     img.write(base64.b64decode(data['image'].split(',')[-1]))
                     user.avatar = data['filename']
-        user.username = data['username']
+        if data['username'] != user.username and len(data['username']) > 2:
+            try:
+                User.objects.get(username=data['username'])
+            except User.DoesNotExist:
+                if bcrypt.checkpw(data['password'].encode(), user.password.encode()):
+                    user.username = data['username']
         user.save()
-        return True
 
 
 class User(models.Model):

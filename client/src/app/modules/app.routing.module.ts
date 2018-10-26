@@ -6,13 +6,17 @@ import { UserNewComponent } from '../components/user/user-new/user-new.component
 import { UserLoginComponent } from '../components/user/user-login/user-login.component';
 import { UserComponent } from '../components/user/user/user.component';
 import { AnimeSingleComponent } from '../components/video/anime-single/anime-single.component';
+import { PlayerComponent } from '../components/video/player/player.component';
+import { SettingsComponent } from '../components/other/settings/settings.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, runGuardsAndResolvers: 'always', },
-  { path: 'user/login', component: UserLoginComponent},
+  { path: '', component: HomeComponent, runGuardsAndResolvers: 'always' },
+  { path: 'user/login', component: UserLoginComponent },
   { path: 'user/new', component: UserNewComponent },
-  { path: 'user/:id', component: UserComponent},
-  { path: 'anime/:id', component: AnimeSingleComponent }
+  { path: 'user/:id', component: UserComponent },
+  { path: 'anime/:id', component: AnimeSingleComponent },
+  { path: 'watch/:id', component: PlayerComponent },
+  { path: 'settings', component: SettingsComponent }
 ];
 
 @NgModule({

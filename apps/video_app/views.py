@@ -1,8 +1,9 @@
 from django.http import JsonResponse
 from .models import Anime, Video
-from .utils import video_search, printProgressBar
+from .utils import video_search, printProgressBar, transcode_media, stop_transcoding
 from time import time
-
+import os, binascii
+from django.conf import settings
 
 """ empty the database (for testing purposes) """
 def reset(req):
@@ -60,5 +61,18 @@ def get_anime(req, anime_id):
 
 """ Initiate the media transcoding in the backend && send the user to the video player """
 def watch_anime(req, video_id):
-    print(video_id)
-    return JsonResponse({'status': 200, 'id': video_id})
+    video = Video.objects.values().get(id=video_id)
+    key = binascii.hexlify(os.urandom(16)).decode()
+    pid = transcode_media(video['path'], key)
+    return JsonResponse({
+        'status': 200, 
+        'host': settings.HOST,
+        'id': video_id,
+        'video': video,
+        'key': key,
+        'pid': pid
+    })
+
+def stop(req, pid):
+    stop_transcoding(pid)
+    return JsonResponse({'status': 200})

@@ -43,8 +43,10 @@ export class UserComponent implements OnInit {
   }
 
   update(id){
-    console.log("user is", this.user);
-    console.log("user id is", id);
+    this._userService.update(this.user.id, this.user).subscribe( data => {
+      this.ngOnInit();
+      this._router.navigate([`/user/${this.user.id}`]);
+    });
   }
 
 }

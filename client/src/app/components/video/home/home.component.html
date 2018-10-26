@@ -1,4 +1,4 @@
-<div class="contents">
+<div class="container contents">
     <div *ngFor="let anime of all_anime; let i = index">
         <div *ngIf="i%6==0" class="columns">
             <app-anime *ngIf="all_anime[i]" [anime]="all_anime[i]" class="column is-2"></app-anime>

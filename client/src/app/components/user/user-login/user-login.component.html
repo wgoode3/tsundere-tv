@@ -1,71 +1,73 @@
-<section class="section log-reg">
-
-    <!-- box header -->
-    <div class="hero is-primary">
-        <div class="hero-body is-bold">
-            <h1 class="title">tsundere-tv</h1>
-        </div>
-    </div>
-
-    <!-- box body -->
-    <div class="box">
-
-        <!-- login form -->
-        <form (submit)="login()">
-
-            <div class="users">
-
-                <div *ngFor="let user of users" class="user" (click)="select(user, $event)">
-                    <article class="media">
-                        <div class="media-left">
-                            <figure class="image is-48x48">
-                                <img class="avatar" src="/media/avatars/{{ user.avatar }}" alt="{{ user.avatar }}" />
-                            </figure>
-                        </div>
-                        <div class="media-content">
-                            <div class="content">
-                                <p><strong>{{ user.username }}</strong></p>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-
-                <div class="user" (click)="newUser()">
-                    <article class="media">
-                        <div class="media-left">
-                            <figure class="image is-48x48">
-                                <span class="icon is-large">
-                                    <i class="fas fa-2x fa-user-plus"></i>
-                                </span>
-                            </figure>
-                        </div>
-                        <div class="media-content">
-                            <div class="content">
-                                <p><strong>New User</strong></p>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-
+<div class="container">
+    <section class="section log-reg">
+    
+        <!-- box header -->
+        <div class="hero is-primary">
+            <div class="hero-body is-bold">
+                <h1 class="title">tsundere-tv</h1>
             </div>
-
-            <div class="columns">
-                <div class="column field is-four-fifths" *ngIf="userSelected">
-                    <label class="label">Password</label>
-                    <div class="control has-icons-left">
-                        <input class="input" type="password" name="password" [(ngModel)]="password" autocomplete="new-confirm" autofocus />
-                        <span class="icon is-small is-left">
-                            <i class="fas fa-lock"></i>
-                        </span>
-                        <p *ngIf="errors.password" class="help is-danger">{{errors.password}}</p>
+        </div>
+    
+        <!-- box body -->
+        <div class="box">
+    
+            <!-- login form -->
+            <form (submit)="login()">
+    
+                <div class="users">
+    
+                    <div *ngFor="let user of users" class="user" (click)="select(user, $event)">
+                        <article class="media">
+                            <div class="media-left">
+                                <figure class="image is-48x48">
+                                    <img class="avatar" src="/media/avatars/{{ user.avatar }}" alt="{{ user.avatar }}" />
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <div class="content">
+                                    <p><strong>{{ user.username }}</strong></p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+    
+                    <div class="user" (click)="newUser()">
+                        <article class="media">
+                            <div class="media-left">
+                                <figure class="image is-48x48">
+                                    <span class="icon is-large">
+                                        <i class="fas fa-2x fa-user-plus"></i>
+                                    </span>
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <div class="content">
+                                    <p><strong>New User</strong></p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+    
+                </div>
+    
+                <div class="columns">
+                    <div class="column field is-four-fifths" *ngIf="userSelected">
+                        <label class="label">Password</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="password" name="password" [(ngModel)]="password" autocomplete="new-confirm" autofocus />
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-lock"></i>
+                            </span>
+                            <p *ngIf="errors.password" class="help is-danger">{{errors.password}}</p>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <input type="submit" value="Submit" class="button is-primary float-right" [(disabled)]="!userSelected"/>
                     </div>
                 </div>
-                <div class="column">
-                    <input type="submit" value="Submit" class="button is-primary float-right" [(disabled)]="!userSelected"/>
-                </div>
-            </div>
-
-        </form>
-
-    </div>
-</section>
+    
+            </form>
+    
+        </div>
+    </section>
+</div>

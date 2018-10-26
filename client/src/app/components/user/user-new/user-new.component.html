@@ -1,66 +1,68 @@
-<section class="section log-reg">
-
-    <!-- box header -->
-    <div class="hero is-primary">
-        <div class="hero-body is-bold">
-            <h1 class="title">tsundere-tv</h1>
+<div class="container">
+    <section class="section log-reg">
+    
+        <!-- box header -->
+        <div class="hero is-primary">
+            <div class="hero-body is-bold">
+                <h1 class="title">tsundere-tv</h1>
+            </div>
         </div>
-    </div>
-
-    <!-- box body -->
-    <div class="box">
-
-        <!-- login form -->
-        <form (submit)="register()">
-            <div class="columns">
-                <div class="column field">
-                    <label class="label">Your Username</label>
-                    <div class="control has-icons-left">
-                        <input class="input" type="text" name="user.username" [(ngModel)]="user.username" autocomplete="new-username" />
-                        <span class="icon is-small is-left">
-                            <i class="fas fa-user"></i>
-                        </span>
-                        <p *ngIf="errors.username" class="help is-danger">{{errors.username}}</p>
+    
+        <!-- box body -->
+        <div class="box">
+    
+            <!-- login form -->
+            <form (submit)="register()">
+                <div class="columns">
+                    <div class="column field">
+                        <label class="label">Your Username</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="text" name="user.username" [(ngModel)]="user.username" autocomplete="new-username" />
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <p *ngIf="errors.username" class="help is-danger">{{errors.username}}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="columns">
-                <div class="column field">
-                    <label class="label">Your Password</label>
-                    <div class="control has-icons-left">
-                        <input class="input" type="password" name="user.password" [(ngModel)]="user.password" autocomplete="new-password" />
-                        <span class="icon is-small is-left">
-                            <i class="fas fa-lock"></i>
-                        </span>
-                        <p *ngIf="errors.password" class="help is-danger">{{errors.password}}</p>
+                <div class="columns">
+                    <div class="column field">
+                        <label class="label">Your Password</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="password" name="user.password" [(ngModel)]="user.password" autocomplete="new-password" />
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-lock"></i>
+                            </span>
+                            <p *ngIf="errors.password" class="help is-danger">{{errors.password}}</p>
+                        </div>
+                    </div>
+                
+                    <div class="column field">
+                        <label class="label">Confirm Password</label>
+                        <div class="control has-icons-left">
+                            <input class="input" type="password" name="user.confirm" [(ngModel)]="user.confirm" autocomplete="new-confirm" />
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-check"></i>
+                            </span>
+                            <p *ngIf="errors.confirm" class="help is-danger">{{errors.confirm}}</p>
+                        </div>
                     </div>
                 </div>
-            
-                <div class="column field">
-                    <label class="label">Confirm Password</label>
-                    <div class="control has-icons-left">
-                        <input class="input" type="password" name="user.confirm" [(ngModel)]="user.confirm" autocomplete="new-confirm" />
-                        <span class="icon is-small is-left">
-                            <i class="fas fa-check"></i>
-                        </span>
-                        <p *ngIf="errors.confirm" class="help is-danger">{{errors.confirm}}</p>
+    
+                <div class="columns">
+                    <div class="column">
+                        <input type="submit" value="Submit" class="button is-primary"/>
                     </div>
                 </div>
-            </div>
-
-            <div class="columns">
-                <div class="column">
-                    <input type="submit" value="Submit" class="button is-primary"/>
+    
+                <div class="columns">
+                    <div class="column">
+                        <a [routerLink]="['/user/login']">Choose an existing account</a>
+                    </div>
                 </div>
-            </div>
-
-            <div class="columns">
-                <div class="column">
-                    <a [routerLink]="['/user/login']">Choose an existing account</a>
-                </div>
-            </div>
-
-        </form>
-
-    </div>
-</section>
+    
+            </form>
+    
+        </div>
+    </section>
+</div>

@@ -13,6 +13,7 @@ urlpatterns = [
     path('api/watch/<int:video_id>', video.watch_anime),
     path('api/videos/search', video.media_search),
     path('api/videos/reset', video.reset),
+    path('api/videos/<int:pid>/stop', video.stop),
     
     # user patterns go here
 

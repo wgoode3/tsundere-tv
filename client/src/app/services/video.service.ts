@@ -29,4 +29,8 @@ export class VideoService {
     return this._http.get('/api/videos/reset');
   }
 
+  stop(pid){
+    return this._http.get(`/api/videos/${pid}/stop`);
+  }
+
 }

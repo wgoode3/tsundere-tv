@@ -92,6 +92,10 @@ input:focus {
     box-shadow: none;
 }
 
+.img-upload:hover {
+    cursor: pointer;
+}
+
 .img-upload:hover img.avatar {
     filter: brightness(50%);
 }

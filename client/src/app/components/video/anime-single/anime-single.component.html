@@ -1,6 +1,14 @@
-<div *ngIf="anime" class="outer">
-    <div class="columns">
-        <div class="column is-3 left-col">
+<div *ngIf="anime" class="container">
+    <!-- <p>
+        <span class="icon is-small is-left">
+            <i class="fas fa-list"></i>
+        </span> 
+        <span class="icon is-small is-left">
+            <i class="fas fa-th"></i>
+        </span>
+    </p> -->
+    <div class="outer columns">
+        <div class="left-col">
             <div class="card">
                 <div class="card-image">
                     <figure class="image">
@@ -26,12 +34,13 @@
                 </div>
             </div>
         </div>
-        <div class="column is-9 right-col">
+        <div class="right-col">
             <div *ngFor="let video of videos; let i = index">
-                <div *ngIf="i%3==0" class="columns">
-                    <app-video *ngIf="videos[i]" [video]="videos[i]" class="column is-4"></app-video>
-                    <app-video *ngIf="videos[i+1]" [video]="videos[i+1]" class="column is-4"></app-video>
-                    <app-video *ngIf="videos[i+2]" [video]="videos[i+2]" class="column is-4"></app-video>
+                <div *ngIf="i%4==0" class="columns">
+                    <app-video *ngIf="videos[i]" [video]="videos[i]" class="column is-3"></app-video>
+                    <app-video *ngIf="videos[i+1]" [video]="videos[i+1]" class="column is-3"></app-video>
+                    <app-video *ngIf="videos[i+2]" [video]="videos[i+2]" class="column is-3"></app-video>
+                    <app-video *ngIf="videos[i+3]" [video]="videos[i+3]" class="column is-3"></app-video>
                 </div>
             </div>
         </div>
