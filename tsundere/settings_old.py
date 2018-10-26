@@ -13,7 +13,11 @@ SECRET_KEY = 'p7o+hrs^95t8yw)^_yy8f7*$^!1!fp0s-@&6v@u3vf5+2k+ge#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+<<<<<<< HEAD:tsundere/settings.py
 ALLOWED_HOSTS = ['localhost', '192.168.0.105']
+=======
+ALLOWED_HOSTS = ['10.0.0.194']
+>>>>>>> 7b0c191689168b6f7d0bffa73f8c4a231b6729fa:server/server/settings.py
 
 
 # Application definition
