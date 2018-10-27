@@ -1,4 +1,4 @@
-import os
+import os, subprocess
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -13,7 +13,7 @@ SECRET_KEY = 'p7o+hrs^95t8yw)^_yy8f7*$^!1!fp0s-@&6v@u3vf5+2k+ge#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '192.168.0.105']
+ALLOWED_HOSTS = ['localhost']
 
 # Application definition
 
@@ -124,6 +124,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 ALLOWED_EXTENSIONS = ('jpg', 'jpeg', 'png', 'gif')
 
-# TODO: programatically determine host when django starts up
 
-HOST = "192.168.0.105"
+""" programatically determine host when django starts up """
+
+b = subprocess.Popen("hostname -I", stdout=subprocess.PIPE, shell=True)
+out, err = b.communicate()
+HOST = out.decode().strip().split(" ")[0]
+ALLOWED_HOSTS.append(HOST)
+print("local ip is: " + HOST)

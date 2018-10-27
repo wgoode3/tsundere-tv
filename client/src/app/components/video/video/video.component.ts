@@ -37,7 +37,7 @@ export class VideoComponent implements OnInit {
       let vid_id = this.video.id;
       function fire_when_ready(){
         fetch(`http://${data['host']}/dash/${data['key']}.mpd`).then( res => {
-          console.log(res.status);
+          // console.log(res.status);
           if(res.status != 200){
             setTimeout(function(){fire_when_ready();}, 1000);
           }else{
