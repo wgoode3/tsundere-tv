@@ -130,5 +130,16 @@ ALLOWED_EXTENSIONS = ('jpg', 'jpeg', 'png', 'gif')
 b = subprocess.Popen("hostname -I", stdout=subprocess.PIPE, shell=True)
 out, err = b.communicate()
 HOST = out.decode().strip().split(" ")[0]
+# HOST = "72.213.254.184"
 ALLOWED_HOSTS.append(HOST)
 print("local ip is: " + HOST)
+
+# change it to from https://stackoverflow.com/questions/166506/finding-local-ip-addresses-using-pythons-stdlib
+
+"""
+import socket
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+s.connect(("8.8.8.8", 80))
+print(s.getsockname()[0])
+s.close()
+"""
