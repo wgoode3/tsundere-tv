@@ -7,6 +7,20 @@ import os, re, bcrypt, base64
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9.+_-]+\.[a-zA-Z]+$')
 
 
+""" resize an image, preserving aspect ratio and keeping it centerred """
+def resizer(img, w, h):
+    offset_x, offset_y = 0, 0
+    if img.width / img.height > w / h:
+        new_width = w*img.height//h
+        offset_x = (img.width - new_width)//2
+    else:
+        new_height = h*img.width//w
+        offset_y = (img.height - new_height)//2
+    img = img.crop( ( offset_x, offset_y, img.width - offset_x, img.height - offset_y) )
+    img = img.resize( (w, h), Image.ANTIALIAS)
+    return img
+
+
 class UserManager(models.Manager):
     def register(self, data):
 
@@ -56,9 +70,14 @@ class UserManager(models.Manager):
         user = User.objects.get(id=user_id)
         if 'filename' in data and 'image' in data:
             if data['filename'].split('.')[-1].lower() in settings.ALLOWED_EXTENSIONS:
-                with open(os.path.join(settings.MEDIA_ROOT, 'avatars', data['filename']), 'wb') as img:
+                img_path = os.path.join(settings.MEDIA_ROOT, 'avatars', data['filename'])
+                with open(img_path, 'wb') as img:
                     img.write(base64.b64decode(data['image'].split(',')[-1]))
                     user.avatar = data['filename']
+                i = Image.open(img_path)
+                i = resizer(i, 128, 128)
+                i.save(img_path)
+                i.close()
         if data['username'] != user.username and len(data['username']) > 2:
             try:
                 User.objects.get(username=data['username'])

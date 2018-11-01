@@ -1,4 +1,6 @@
 import os, subprocess, shutil, re, difflib
+from PIL import Image
+from io import BytesIO
 from requests import Session
 
 session = Session()
@@ -239,13 +241,27 @@ def search_jikan(anime):
     return entry
 
 
+""" resize an image, preserving aspect ratio and keeping it centerred """
+def resizer(img, w, h):
+    offset_x, offset_y = 0, 0
+    if img.width / img.height > w / h:
+        new_width = w*img.height//h
+        offset_x = (img.width - new_width)//2
+    else:
+        new_height = h*img.width//w
+        offset_y = (img.height - new_height)//2
+    img = img.crop( ( offset_x, offset_y, img.width - offset_x, img.height - offset_y) )
+    img = img.resize( (w, h), Image.ANTIALIAS)
+    return img
+
+
 """ save a thumbnail image for the anime from MAL """
 def download_thumbnail(anime, url):
     thumbnail_name = "/media/anime/" + "_".join(anime.split(" ")) + ".jpg"
     r = session.get(url, stream=True)
-    with open(os.getcwd() + thumbnail_name, 'wb') as f:
-        r.raw.decode_content = True
-        shutil.copyfileobj(r.raw, f)
+    img = resizer(Image.open(BytesIO(r.content)), 200, 300)
+    img.save(os.getcwd() + thumbnail_name)
+    img.close()
     return thumbnail_name
 
 
