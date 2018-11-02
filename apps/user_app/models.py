@@ -69,11 +69,12 @@ class UserManager(models.Manager):
     def update(self, data, user_id):
         user = User.objects.get(id=user_id)
         if 'filename' in data and 'image' in data:
-            if data['filename'].split('.')[-1].lower() in settings.ALLOWED_EXTENSIONS:
-                img_path = os.path.join(settings.MEDIA_ROOT, 'avatars', data['filename'])
+            extension = data['filename'].split('.')[-1].lower()
+            if extension in settings.ALLOWED_EXTENSIONS:
+                img_path = os.path.join(settings.MEDIA_ROOT, 'avatars', user.username + "." + extension)
                 with open(img_path, 'wb') as img:
                     img.write(base64.b64decode(data['image'].split(',')[-1]))
-                    user.avatar = data['filename']
+                    user.avatar = user.username + "." + extension
                 i = Image.open(img_path)
                 i = resizer(i, 128, 128)
                 i.save(img_path)

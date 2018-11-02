@@ -6,10 +6,18 @@ const fillStyle    = "#ffffff";
 const strokeStyle  = "191,191,191";
 const gravConstant = 3;
 const selector     = document.querySelector("body");
-// const disable      = document.getElementById("disable");
+window.garden      = true;
 
 (function () {
   'use strict';
+  
+  setInterval( function() {
+    if(window.garden){
+      nodeGarden.start();
+    }else{
+      nodeGarden.stop();
+    }
+  }, 1000);
 
   function defined(a, b) {
     return a != null ? a : b;
@@ -218,10 +226,5 @@ const selector     = document.querySelector("body");
   window.addEventListener('resize', function () {
     nodeGarden.resize();
   });
-
-  // disables/enables the animation when clicked
-  // disable.addEventListener("click", function() {
-  //   nodeGarden.playing ? nodeGarden.stop(): nodeGarden.start();
-  // });
 
 })();

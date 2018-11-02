@@ -3,7 +3,7 @@
     padding: 0;
     height: 100vh !important;
     min-width: 100% !important;
-    overflow: auto;
+    overflow: hidden;
 }
 
 .vid {

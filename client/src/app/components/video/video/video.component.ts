@@ -36,14 +36,18 @@ export class VideoComponent implements OnInit {
       let router = this._router;
       let vid_id = this.video.id;
       function fire_when_ready(){
-        fetch(`http://${data['host']}/dash/${data['key']}.mpd`).then( res => {
-          // console.log(res.status);
-          if(res.status != 200){
-            setTimeout(function(){fire_when_ready();}, 1000);
-          }else{
-            router.navigate([`/watch/${vid_id}`]);
-          }
-        });
+        try {
+          fetch(`http://${data['host']}/dash/${data['key']}.mpd`).then( res => {
+            // console.log(res.status);
+            if(res.status != 200){
+              setTimeout(function(){fire_when_ready();}, 1000);
+            }else{
+              router.navigate([`/watch/${vid_id}`]);
+            }
+          });
+        }catch(err) {
+          console.log(err);
+        }
       }
       fire_when_ready();
     });

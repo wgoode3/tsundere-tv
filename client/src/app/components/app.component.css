@@ -8,3 +8,7 @@
 .avatar {
     border-radius: 50%;
 }
+.navbar {
+    background-color: #3339 !important;
+    transition: .25s ease;
+}

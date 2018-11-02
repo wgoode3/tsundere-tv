@@ -36,6 +36,9 @@ export class AppComponent implements OnInit, OnDestroy {
     if(event.constructor.name == "HomeComponent"){
       this.getUser();
     }
+    if(event.constructor.name == "PlayerComponent"){
+      console.log("in player");
+    }
   }
 
   getUser(){
