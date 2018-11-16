@@ -2,6 +2,7 @@ import os, subprocess, shutil, re, difflib
 from PIL import Image
 from io import BytesIO
 from requests import Session
+from django.conf import settings
 
 session = Session()
 
@@ -11,7 +12,7 @@ CRC32_HASH = re.compile('^[0-9A-F]{8}$')
 DURATION = u'''ffprobe -i "{}" -show_entries format=duration -v quiet -of csv="p=0"'''
 THUMB = u'''ffmpeg -ss {0} -i "{1}" -vframes 1 -s 480x270 "{2}/{3}.jpg" -y'''
 FNULL = open(os.devnull, 'w')
-FOLDER = os.getcwd() + "/media/videos"
+FOLDER = settings.MEDIA_ROOT + "/videos"
 CHECK = u'''ffprobe -v error -show_entries stream '{}' '''
 SEARCH_URL = "https://api.jikan.moe/search/anime/?q={}"
 
@@ -257,12 +258,12 @@ def resizer(img, w, h):
 
 """ save a thumbnail image for the anime from MAL """
 def download_thumbnail(anime, url):
-    thumbnail_name = "/media/anime/" + "_".join(anime.split(" ")) + ".jpg"
+    thumbnail_name = "/anime/" + "_".join(anime.split(" ")) + ".jpg"
     r = session.get(url, stream=True)
     img = resizer(Image.open(BytesIO(r.content)), 200, 300)
-    img.save(os.getcwd() + thumbnail_name)
+    img.save(settings.MEDIA_ROOT + thumbnail_name)
     img.close()
-    return thumbnail_name
+    return "/media" + thumbnail_name
 
 
 ENCODE = u'''ffmpeg -loglevel quiet -re -i '{0}' -c:a aac -ac 2 -b:a 128k -strict -2 -c:v libx264 -pix_fmt yuv420p -profile:v baseline -preset ultrafast -tune zerolatency -vsync cfr -x264-params "nal-hrd=cbr" -vf subtitles="'{0}'" -b:v 500k -minrate 500k -maxrate 500k -bufsize 1000k -s 640x360 -f flv rtmp://127.0.0.1/dash/{1}_low -c:a aac -ac 2 -b:a 128k -strict -2 -c:v libx264 -pix_fmt yuv420p -profile:v baseline -preset ultrafast -tune zerolatency -vsync cfr -x264-params "nal-hrd=cbr" -vf subtitles="'{0}'" -b:v 1500k -minrate 1500k -maxrate 1500k -bufsize 3000k -s 1280x720 -f flv rtmp://127.0.0.1/dash/{1}_med -c:a aac -ac 2 -b:a 128k -strict -2 -c:v libx264 -pix_fmt yuv420p -profile:v baseline -preset ultrafast -tune zerolatency -vsync cfr -x264-params "nal-hrd=cbr" -vf subtitles="'{0}'" -b:v 5000k -minrate 5000k -maxrate 5000k -bufsize 10000k -s 1920x1080 -f flv rtmp://127.0.0.1/dash/{1}_high'''
