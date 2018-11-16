@@ -87,7 +87,7 @@ STATICFILES_STORAGE = 'spa.storage.SPAStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 
-MEDIA_ROOT = os.path.join(PREV_DIR, 'media')
+MEDIA_ROOT = os.path.join(PREV_DIR, 'thumbs')
 
 ALLOWED_EXTENSIONS = ('jpg', 'jpeg', 'png', 'gif')
 

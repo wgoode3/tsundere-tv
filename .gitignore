@@ -1,7 +1,5 @@
-media/
+thumbs/
 source/
 venv/
 dist/
 node_modules/
-*.pyc
-*.mkv
