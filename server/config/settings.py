@@ -3,6 +3,9 @@ import os, subprocess
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# Calculate the directory outside of BASE_DIR
+PREV_DIR = "/".join(BASE_DIR.split("/")[:-1])
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -37,25 +40,10 @@ MIDDLEWARE = [
     'spa.middleware.SPAMiddleware'
 ]
 
-ROOT_URLCONF = 'tsundere.urls'
+ROOT_URLCONF = 'config.urls'
 
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
-]
 
-WSGI_APPLICATION = 'tsundere.wsgi.application'
+WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Database
@@ -64,28 +52,9 @@ WSGI_APPLICATION = 'tsundere.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(PREV_DIR, 'db.sqlite3'),
     }
 }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
 
 
 # Internationalization
@@ -105,10 +74,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
+
 STATIC_URL = '/static/'
 
-# STATIC_ROOT = os.path.join(BASE_DIR, "static/")
-STATIC_ROOT = os.path.join(BASE_DIR, "client/dist/client/")
+STATIC_ROOT = PREV_DIR + "/client/dist/client/"
 
 # added for use with django spa middleware
 
@@ -116,30 +85,17 @@ STATICFILES_STORAGE = 'spa.storage.SPAStaticFilesStorage'
 
 # add file uploads too
 
-TEMPLATES[0]["OPTIONS"]["context_processors"].append('django.template.context_processors.media')
-
 MEDIA_URL = '/media/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(PREV_DIR, 'media')
 
 ALLOWED_EXTENSIONS = ('jpg', 'jpeg', 'png', 'gif')
 
 
-""" programatically determine host when django starts up """
+# programatically determine host when django starts up
 
 b = subprocess.Popen("hostname -I", stdout=subprocess.PIPE, shell=True)
 out, err = b.communicate()
 HOST = out.decode().strip().split(" ")[0]
-# HOST = "72.213.254.184"
 ALLOWED_HOSTS.append(HOST)
-print("local ip is: " + HOST)
-
-# change it to from https://stackoverflow.com/questions/166506/finding-local-ip-addresses-using-pythons-stdlib
-
-"""
-import socket
-s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-s.connect(("8.8.8.8", 80))
-print(s.getsockname()[0])
-s.close()
-"""
+print("to connect, go to http://" + HOST + ":8000")

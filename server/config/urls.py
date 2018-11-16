@@ -19,6 +19,10 @@ urlpatterns = [
 
     path('api/user', user.Users.as_view()),
     path('api/user/session', user.UsersSession.as_view()),
-    path('api/user/<int:user_id>', user.UsersDetail.as_view())
+    path('api/user/<int:user_id>', user.UsersDetail.as_view()),
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+
+# static goes here
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
