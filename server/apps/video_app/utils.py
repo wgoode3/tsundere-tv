@@ -152,6 +152,9 @@ def parse_filename( file ):
 
     if episode is not None:
         r = r.split(episode)[0]
+    else:
+        print("EPISODE NOT FOUND: {}".fomat(path))
+        d['episode_number'] = "???"
 
     r = r.split(" - ")[0]
     to_remove = ("BD", "bd", "Blu-ray", "blu-ray", "Bluray", "bluray", "TV", "tv")

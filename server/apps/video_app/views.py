@@ -25,7 +25,7 @@ def media_search(req):
     videos = video_search()
     time2 = time()
 
-    print(f"adding {len(videos)} videos to the database...")
+    print("adding {} videos to the database...".format(len(videos)))
     i = 1
     for video in videos:
         Video.objects.add_video(video)
@@ -34,10 +34,10 @@ def media_search(req):
     
     time3 = time()
     
-    print(f"completed in {time3-time1} seconds...")
+    print("completed in {} seconds...".format(time3-time1))
     
-    msg1 = f"found {len(videos)} videos in {time2-time1} seconds"
-    msg2 = f"added to db in {time3-time2} seconds"
+    msg1 = "found {} videos in {} seconds".format(len(videos), time2-time1)
+    msg2 = "added to db in {} seconds".format(time3-time2)
 
     return JsonResponse({
         'status': 200, 
