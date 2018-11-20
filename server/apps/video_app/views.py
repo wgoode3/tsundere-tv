@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from .models import Anime, Video
-from .utils import video_search, printProgressBar, transcode_media, stop_transcoding
+from .utils import video_search, print_progressbar, transcode_media, stop_transcoding
 from time import time
 import os, binascii
 from django.conf import settings
@@ -29,7 +29,7 @@ def media_search(req):
     i = 1
     for video in videos:
         Video.objects.add_video(video)
-        printProgressBar(i, len(videos), prefix = 'Progress:', suffix = f"{i} of {len(videos)}", length = 50)
+        print_progressbar(i, len(videos), prefix = 'Progress:', suffix = f"{i} of {len(videos)}", length = 50)
         i += 1
     
     time3 = time()

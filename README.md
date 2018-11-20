@@ -21,7 +21,7 @@ Home anime media server in the style of Plex, recursively searches for, categori
 
 <hr>
 
-### Deploy/Testing instructions
+### Deploy/Testing instructions:
 0. Insure the following are installed
     * git
     * FFmpeg
