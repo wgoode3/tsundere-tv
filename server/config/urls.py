@@ -23,6 +23,6 @@ urlpatterns = [
 
 ]
 
-# static goes here
+# media goes here
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

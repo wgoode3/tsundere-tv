@@ -17,8 +17,10 @@ CHECK = u'''ffprobe -v error -show_entries stream '{}' '''
 SEARCH_URL = "https://api.jikan.moe/search/anime/?q={}"
 
 
-""" finding media files to manage """
 def search( loc ):
+    """ 
+    finds media files to manage 
+    """
     ls = os.listdir( loc )
     for thing in ls:
         if not thing.startswith( "." ):
@@ -34,11 +36,11 @@ def video_search():
     return VIDEOS[0]
 
 
-""" 
-printing a progress bar 
-from https://stackoverflow.com/questions/3173320/text-progress-bar-in-the-console
-"""
 def printProgressBar ( iteration, total, prefix = '', suffix = '', decimals = 1, length = 100, fill = '█' ):
+    """ 
+    prints a progress bar 
+    from https://stackoverflow.com/questions/3173320/text-progress-bar-in-the-console
+    """
     percent = ( "{0:." + str( decimals ) + "f}" ).format( 100 * ( iteration / float( total ) ) )
     filledLength = int( length * iteration // total )
     bar = fill * filledLength + '-' * ( length - filledLength )
@@ -48,8 +50,10 @@ def printProgressBar ( iteration, total, prefix = '', suffix = '', decimals = 1,
         print()
 
 
-""" splitting up the filename """
 def unbracket(path):
+    """ 
+    splits up the filename 
+    """
     path = path.split( "/" )[-1]
 
     brackets = []
@@ -81,29 +85,40 @@ def unbracket(path):
     return brackets, parenthesis, rest_of_name.split( "." )[0]
 
 
-""" parse filename to determin information about the file """
 def parse_filename( file ):
+    """ 
+    parses filename to determine information about the file 
+    """
 
     d = {}
 
-    """ determine the fansub group """
+    """ 
+    determines the fansub group 
+    """
     if file.startswith( "[" ) and file.find( "]" ) > 0:
         d['fansub_group'] = file[1:file.find("]")]
 
-    """ remove underscores """
+    """ 
+    removes underscores 
+    """
     file = file.replace( "_", " " )
 
-    """ filter out text inside of brackets and parenthesis """
+    """ 
+    filters out text inside of brackets and parenthesis 
+    """
     b, p, r = unbracket( file )
 
-    """ find the CRC32 hash value """
-    # result tends to be at the end of the brackets, so reversed should be faster
+    """ 
+    finds the CRC32 hash value 
+    """
     for val in reversed(p + b):
         if CRC32_HASH.match(val):
             d['crc32_hash'] = val
             break
 
-    """ check for season """
+    """ 
+    checks for season 
+    """
     season = re.findall("((1st|2nd|3rd|4th|5th|first|second|third|forth|fifth)\ season)|(s\d)|(season\ \d)", file, flags=re.IGNORECASE)
     if len(season) > 0:
         season = max(season[0], key=len)
@@ -112,27 +127,35 @@ def parse_filename( file ):
 
     episode = ''
 
-    """ check if it is an op or an ed """
+    """ 
+    checks if it is an op or an ed 
+    """
     op_ed = re.findall("(\ op|\ ed|\ ncop|\ nced|\ OP|\ ED|\ NCOP|\ NCED)[\ ]?(\d+)?", r)
     op_ed = [''.join(o for o in op).strip() for op in op_ed]
     if len(op_ed) > 0:
         episode = max(op_ed, key=len)
 
-    """ check if it is an ova or oad """
+    """ 
+    checks if it is an ova or oad 
+    """
     if len(episode) < 1:
         ova = re.findall("(\ \d+\ |\ \d+\ -\ )?(\ ova|\ oad|\ ona|\ OVA|\ OAD|\ ONA)(\ \d+|\ -\ \d+)?", r)
         ova = [''.join(o for o in ov).strip() for ov in ova]
         if len(ova) > 0:
             episode = max(ova, key=len)
 
-    """ check if it is a special """
+    """ 
+    checks if it is a special 
+    """
     if len(episode) < 1:
         special = re.findall("(\ sp\ |\ special\ )(\d+|-\ \d+)?", r, flags=re.IGNORECASE)
         special = [''.join(s for s in sp).strip() for sp in special]
         if len(special) > 0:
             episode = max(special, key=len)
 
-    """ if it isn't an op/ed, ova/oad, or a special find the episode number """
+    """ 
+    finds the episode number if it isn't an op/ed, ova/oad, or a special  
+    """
     if len(episode) < 1:
         episode = re.findall( r'(episode\ \d+|ep\d+|e\d+|\ \d+)(\.\d)?(v\d+)?', r, flags=re.IGNORECASE ) 
         episode = [''.join(e for e in ep).strip() for ep in episode]
@@ -141,15 +164,16 @@ def parse_filename( file ):
         elif len(episode) < 1:
             episode = None
         else:
-            """ I am assuming that if there is more than one number the last is probably the episode """
-            """ works for 2 out of 2 of my real world test cases """
+            # I am assuming that if there is more than one number the last is probably the episode
+            # works for 2 out of 2 of my real world test cases
             episode = episode[-1]
     
     # by now we know what the episode is or we know nothing
     d['episode_number'] = episode
 
-    """ remove some things from the rest of the string """
-
+    """ 
+    removes some things from the rest of the string 
+    """
     if episode is not None:
         r = r.split(episode)[0]
     else:
@@ -167,20 +191,26 @@ def parse_filename( file ):
     return d
 
 
-""" find the media filesize """
 def get_filesize(path):
+    """ 
+    finds the media filesize 
+    """
     return os.stat(path).st_size
 
 
-""" find media file duration """
 def get_duration(path):
+    """ 
+    finds media file duration 
+    """   
     p = subprocess.Popen( DURATION.format(path), stdout=subprocess.PIPE, shell=True )
     out, err = p.communicate()
     return float(out.strip())
 
 
-""" generate video thumbnail """
 def get_thumbnail(path, duration):
+    """ 
+    generates video thumbnail 
+    """
     thumnail_name = "_".join( path.split("/")[-1].split(".")[0].split(" ") )
     subprocess.Popen(
         THUMB.format( duration/3, path, FOLDER, thumnail_name ), 
@@ -191,8 +221,10 @@ def get_thumbnail(path, duration):
     return "/media/videos/{}.jpg".format(thumnail_name)
 
 
-""" check for the presence of subtitles """
 def get_subtitles(path):
+    """ 
+    checks for the presence of subtitles 
+    """
     b = subprocess.Popen(CHECK.format(path), shell=True, stdout=subprocess.PIPE)
     out, err = b.communicate()
     streams = []
@@ -227,8 +259,10 @@ def get_subtitles(path):
     return subs
 
 
-""" Search the jikan api for anime information from MAL """
 def search_jikan(anime):
+    """ 
+    searchs the jikan api for anime information from MAL 
+    """
     # all_results = session.get(SEARCH_URL.format(anime), verify=False).json()["result"]
     all_results = session.get(SEARCH_URL.format(anime)).json()["result"]
     titles = [result["title"].lower() for result in all_results]
@@ -245,8 +279,10 @@ def search_jikan(anime):
     return entry
 
 
-""" resize an image, preserving aspect ratio and keeping it centerred """
 def resizer(img, w, h):
+    """ 
+    resizes an image, preserving aspect ratio and keeping it centerred 
+    """
     offset_x, offset_y = 0, 0
     if img.width / img.height > w / h:
         new_width = w*img.height//h
@@ -259,8 +295,10 @@ def resizer(img, w, h):
     return img
 
 
-""" save a thumbnail image for the anime from MAL """
 def download_thumbnail(anime, url):
+    """ 
+    saves a thumbnail image for the anime from MAL 
+    """
     thumbnail_name = "/anime/" + "_".join(anime.split(" ")) + ".jpg"
     r = session.get(url, stream=True)
     img = resizer(Image.open(BytesIO(r.content)), 200, 300)
@@ -271,8 +309,10 @@ def download_thumbnail(anime, url):
 
 ENCODE = u'''ffmpeg -loglevel quiet -re -i '{0}' -c:a aac -ac 2 -b:a 128k -strict -2 -c:v libx264 -pix_fmt yuv420p -profile:v baseline -preset ultrafast -tune zerolatency -vsync cfr -x264-params "nal-hrd=cbr" -vf subtitles="'{0}'" -b:v 500k -minrate 500k -maxrate 500k -bufsize 1000k -s 640x360 -f flv rtmp://127.0.0.1/dash/{1}_low -c:a aac -ac 2 -b:a 128k -strict -2 -c:v libx264 -pix_fmt yuv420p -profile:v baseline -preset ultrafast -tune zerolatency -vsync cfr -x264-params "nal-hrd=cbr" -vf subtitles="'{0}'" -b:v 1500k -minrate 1500k -maxrate 1500k -bufsize 3000k -s 1280x720 -f flv rtmp://127.0.0.1/dash/{1}_med -c:a aac -ac 2 -b:a 128k -strict -2 -c:v libx264 -pix_fmt yuv420p -profile:v baseline -preset ultrafast -tune zerolatency -vsync cfr -x264-params "nal-hrd=cbr" -vf subtitles="'{0}'" -b:v 5000k -minrate 5000k -maxrate 5000k -bufsize 10000k -s 1920x1080 -f flv rtmp://127.0.0.1/dash/{1}_high'''
 
-""" Start the media transcoding """
 def transcode_media(path, key):
+    """ 
+    starts the media transcoding 
+    """
     if os.path.isfile(path):
         # print(path, key)
         process = subprocess.Popen(ENCODE.format(path, key), stdout=FNULL, shell=True)
@@ -281,6 +321,8 @@ def transcode_media(path, key):
         return process.pid+1
 
 
-""" Stop transcoding """
 def stop_transcoding(pid):
+    """ 
+    stops the transcoding process
+    """
     subprocess.Popen("kill {pid}".format(pid=pid), shell=True)
