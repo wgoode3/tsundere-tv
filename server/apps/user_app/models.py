@@ -5,10 +5,15 @@ from io import BytesIO
 import os, re, bcrypt, base64
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9.+_-]+\.[a-zA-Z]+$')
+AVATAR_WIDTH = 128
+AVATAR_HEIGHT  = 128
 
 
-""" resize an image, preserving aspect ratio and keeping it centerred """
+# TODO: modularize this file away to somewhere else
 def resizer(img, w, h):
+    """ 
+    resizes an image, preserving aspect ratio and keeping it centerred 
+    """
     offset_x, offset_y = 0, 0
     if img.width / img.height > w / h:
         new_width = w*img.height//h
@@ -23,10 +28,9 @@ def resizer(img, w, h):
 
 class UserManager(models.Manager):
     def register(self, data):
-
         errors = {}
 
-        """ username validations """
+        # username validations
         if len(data['username']) < 1:
             errors['username'] = 'Username is required!'
         elif len(data['username']) < 3:
@@ -38,13 +42,13 @@ class UserManager(models.Manager):
             except User.DoesNotExist: 
                 pass
 
-        """ password validations """
+        # password validations
         if len(data['password']) < 1:
             errors['password'] = 'Password is required!'
         elif len(data['password']) < 8:
             errors['password'] = 'Password must be 8 characters or longer!'
 
-        """ confirm password validations """
+        # confirm password validations
         if len(data['confirm']) < 1:
             errors['confirm'] = 'Confirm Password is required!'
         elif data['confirm'] != data['password']:
@@ -76,7 +80,7 @@ class UserManager(models.Manager):
                     img.write(base64.b64decode(data['image'].split(',')[-1]))
                     user.avatar = user.username + "." + extension
                 i = Image.open(img_path)
-                i = resizer(i, 128, 128)
+                i = resizer(i, AVATAR_WIDTH, AVATAR_HEIGHT)
                 i.save(img_path)
                 i.close()
         if data['username'] != user.username and len(data['username']) > 2:
